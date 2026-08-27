@@ -1,0 +1,2734 @@
+<!DOCTYPE html>
+<html lang="ta" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Masjid Ceylon - பள்ளிவாசல் & ஊர் நிர்வாக சபை ERP</title>
+  
+  <!-- Open Graph / WhatsApp / Facebook Preview Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="மஸ்ஜித் சிலோன் (Masjid Ceylon) - பள்ளிவாசல் & ஊர் நிர்வாக சபை ERP">
+  <meta property="og:description" content="இலங்கை முஸ்லிம் பள்ளிவாசல் நம்பிக்கையாளர் பொறுப்பு சபை மற்றும் மஹல்லா குடும்ப மக்கள் தொகை, சந்தா, ஸகாத், நிதி மேலாண்மை தரவுத்தளம்.">
+  <meta property="og:site_name" content="Masjid Ceylon ERP">
+  <meta name="theme-color" content="#064e3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Masjid Ceylon">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Tamil:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mosque: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              950: '#022c22',
+            },
+            gold: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Tamil', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Islamic Geometric Pattern & Background Texture */
+    body {
+      font-family: 'Inter', 'Noto Sans Tamil', sans-serif;
+      background-color: #f8fafc;
+      background-image: radial-gradient(#064e3b 0.65px, transparent 0.65px), radial-gradient(#064e3b 0.65px, #f8fafc 0.65px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+      background-attachment: fixed;
+      color: #1e293b;
+      -webkit-tap-highlight-color: transparent;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+    }
+
+    .gold-gradient {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
+    }
+
+    .green-gradient {
+      background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #047857 100%);
+    }
+
+    /* Mobile Touch optimization */
+    button, a, input, select, textarea {
+      touch-action: manipulation;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #047857;
+      border-radius: 4px;
+    }
+
+    /* Bottom sheet modal styling for mobile screens */
+    @media (max-width: 640px) {
+      .modal-dialog {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        max-height: 90vh;
+        border-radius: 1.5rem 1.5rem 0 0;
+      }
+    }
+
+    /* Print Formatting */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .glass-card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased pb-20 sm:pb-6">
+
+  <!-- ================= TOP NOTIFICATION TOAST ================= -->
+  <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto sm:right-5 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none max-w-sm mx-auto">
+    <div id="toastContent" class="flex items-center gap-3 px-4 py-3.5 rounded-2xl shadow-2xl text-white font-medium text-xs sm:text-sm">
+      <i id="toastIcon" class="fa-solid fa-circle-check text-lg"></i>
+      <span id="toastMsg">வெற்றிகரமாக சேமிக்கப்பட்டது</span>
+    </div>
+  </div>
+
+  <!-- ================= HEADER SECTION ================= -->
+  <header class="green-gradient text-white border-b-4 border-gold-500 shadow-xl sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between py-2.5 sm:py-3 gap-2 sm:gap-3">
+        
+        <!-- Mosque Logo & Titles -->
+        <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+          <div class="flex items-center gap-3">
+            <div class="relative group cursor-pointer" onclick="document.getElementById('logoInput').click()" title="லோகோ மாற்ற கிளிக் செய்க">
+              <div id="logoContainer" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/10 border-2 border-gold-400/80 p-1 flex items-center justify-center overflow-hidden shadow-inner backdrop-blur">
+                <img id="mosqueLogoImg" src="" alt="லோகோ" class="w-full h-full object-cover rounded-xl hidden">
+                <i id="logoDefaultIcon" class="fa-solid fa-mosque text-xl sm:text-3xl text-gold-400"></i>
+              </div>
+              <div class="absolute -bottom-1 -right-1 bg-gold-500 text-mosque-950 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow-md">
+                <i class="fa-solid fa-camera"></i>
+              </div>
+              <input type="file" id="logoInput" accept="image/*" class="hidden" onchange="handleLogoUpload(event)">
+            </div>
+
+            <div>
+              <div class="flex items-center gap-1.5">
+                <h1 id="headerMosqueName" class="text-base sm:text-2xl font-bold tracking-tight text-white flex items-center gap-1.5 truncate max-w-[210px] sm:max-w-none">
+                  மஸ்ஜித் சிலோன்
+                </h1>
+                <button onclick="openMosqueSettingsModal()" class="text-gold-400 hover:text-white text-xs p-1 rounded transition" title="பள்ளிவாசல் தகவல்களை மாற்ற">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              </div>
+              <p id="headerMosqueSub" class="text-[11px] sm:text-sm text-emerald-200 font-normal truncate max-w-[230px] sm:max-w-none">
+                ஜும்ஆ பள்ளிவாசல் & நிர்வாக சபை
+              </p>
+              <div class="flex items-center gap-2 mt-0.5 text-[10px] sm:text-[11px] text-gold-300">
+                <span id="headerWaqfNo"><i class="fa-solid fa-certificate mr-1"></i>WQ-8842/LK</span>
+                <span>•</span>
+                <span id="headerLocation"><i class="fa-solid fa-location-dot mr-1"></i>இலங்கை</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Action Icons -->
+          <div class="flex items-center gap-1 sm:hidden">
+            <button onclick="openShareAppModal()" class="bg-green-600 p-2 rounded-xl text-white text-xs shadow" title="வாட்ஸ்அப் பகிர்வு">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+            </button>
+            <button onclick="openMobileMenuModal()" class="bg-emerald-800 p-2 rounded-xl text-gold-300 text-xs shadow" title="முழு மெனு">
+              <i class="fa-solid fa-bars text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Global Search & System Actions -->
+        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+          <!-- Global Search Input -->
+          <div class="relative w-full md:w-72">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+            <input 
+              type="text" 
+              id="globalSearchInput" 
+              placeholder="பெயர், NIC, சந்தா எண், போன்..." 
+              class="w-full bg-white/10 text-white placeholder-emerald-200 text-xs rounded-xl pl-9 pr-8 py-2 sm:py-2.5 border border-emerald-600 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:bg-white/20 transition"
+              onkeyup="handleGlobalSearch(event)"
+            >
+            <button onclick="clearGlobalSearch()" id="clearSearchBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 hover:text-white hidden text-xs">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- Desktop Quick Actions -->
+          <button onclick="openShareAppModal()" class="no-print hidden sm:flex bg-green-600 hover:bg-green-500 text-white font-semibold text-xs px-3 py-2.5 rounded-xl border border-green-400 items-center gap-1.5 transition shadow" title="வாட்ஸ்அப் மூலம் அப்ளிகேஷனை பகிர்க">
+            <i class="fa-brands fa-whatsapp text-sm text-white"></i>
+            <span>Share</span>
+          </button>
+          <button onclick="printCurrentView()" class="no-print hidden sm:flex bg-emerald-800/80 hover:bg-emerald-700 text-emerald-100 p-2.5 rounded-xl border border-emerald-600 transition shadow" title="அச்சிடுக">
+            <i class="fa-solid fa-print"></i>
+          </button>
+          <button onclick="exportFullDatabaseJSON()" class="no-print hidden sm:flex bg-gold-600 hover:bg-gold-500 text-white font-medium text-xs px-3 py-2.5 rounded-xl border border-gold-400 items-center gap-1.5 transition shadow" title="முழுமையான பேக்கப்">
+            <i class="fa-solid fa-download"></i>
+            <span>Backup</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= DESKTOP HORIZONTAL NAVIGATION TABS ================= -->
+    <nav class="bg-mosque-950/95 border-t border-emerald-900/60 overflow-x-auto no-print hidden sm:block">
+      <div class="max-w-7xl mx-auto px-2 sm:px-4 flex gap-1 py-1.5 text-xs font-medium text-gray-300 whitespace-nowrap scrollbar-none">
+        
+        <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition active-tab text-gold-400 bg-emerald-900/90 border-b-2 border-gold-400 font-semibold">
+          <i class="fa-solid fa-gauge-high"></i>
+          <span>1. முகப்பு & சபை</span>
+        </button>
+
+        <button onclick="switchTab('tab-census')" id="btn-tab-census" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-people-roof"></i>
+          <span>2. குடும்பப் பதிவேடு</span>
+        </button>
+
+        <button onclick="switchTab('tab-subscription')" id="btn-tab-subscription" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-hand-holding-dollar"></i>
+          <span>3. சந்தா & நிதி</span>
+        </button>
+
+        <button onclick="switchTab('tab-zakat')" id="btn-tab-zakat" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-handshake-angle"></i>
+          <span>4. ஸகாத் & நிவாரணம்</span>
+        </button>
+
+        <button onclick="switchTab('tab-nikah-janaza')" id="btn-tab-nikah-janaza" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-heart-pulse"></i>
+          <span>5. நிக்காஹ் & ஜனாஸா</span>
+        </button>
+
+        <button onclick="switchTab('tab-madrasa')" id="btn-tab-madrasa" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-book-quran"></i>
+          <span>6. மக்தப் & கல்வி</span>
+        </button>
+
+        <button onclick="switchTab('tab-waqf')" id="btn-tab-waqf" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>7. வக்ஃபு சொத்துக்கள்</span>
+        </button>
+
+        <button onclick="switchTab('tab-admin')" id="btn-tab-admin" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition">
+          <i class="fa-solid fa-folder-closed"></i>
+          <span>8. காப்பகம் & அமைப்புகள்</span>
+        </button>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+    <!-- ================= TAB 1: முகப்பு & நிர்வாக சபை (DASHBOARD & TRUSTEES) ================= -->
+    <section id="tab-dashboard" class="tab-content block space-y-4 sm:space-y-6">
+      
+      <!-- Top Banner / Mosque Welcome Card -->
+      <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-5 text-mosque-900 pointer-events-none text-8xl sm:text-9xl">
+          <i class="fa-solid fa-mosque"></i>
+        </div>
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-emerald-100 text-mosque-800 text-[11px] sm:text-xs font-semibold">
+            <i class="fa-solid fa-moon text-gold-600"></i>
+            <span id="liveHijriDate">ஹிஜ்ரி 1448 • இலங்கை முஸ்லிம் விவகார சபை பதிவு</span>
+          </div>
+          <h2 class="text-lg sm:text-2xl font-bold text-gray-800" id="dashMosqueHeading">மஸ்ஜித் சிலோன் - நிர்வாக சபை டாஷ்போர்டு</h2>
+          <p class="text-xs sm:text-sm text-gray-600" id="dashMosqueDesc">
+            ஊர் மக்களின் சமூக, கல்வி, பொருளாதார மற்றும் மார்க்க நலன்களை ஒருங்கிணைக்கும் ஸ்மார்ட் நிர்வாக முறைமை.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <button onclick="openAddTrusteeModal()" class="flex-1 sm:flex-none bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-semibold px-3.5 py-2.5 rounded-xl shadow flex items-center justify-center gap-1.5 transition">
+            <i class="fa-solid fa-user-plus text-gold-400"></i>
+            <span>+ உறுப்பினர்</span>
+          </button>
+          <button onclick="openAddNoticeModal()" class="flex-1 sm:flex-none bg-gold-500 hover:bg-gold-600 text-mosque-950 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow flex items-center justify-center gap-1.5 transition">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>+ அறிவிப்பு</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Executive KPI Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-4">
+        
+        <!-- Total Families -->
+        <div class="glass-card p-3 sm:p-4 rounded-2xl shadow-sm border-l-4 border-emerald-700 hover:shadow-md transition cursor-pointer" onclick="switchTab('tab-census')">
+          <div class="flex items-center justify-between text-gray-500 text-[11px] sm:text-xs">
+            <span>குடும்பங்கள்</span>
+            <i class="fa-solid fa-house-chimney-user text-emerald-700 text-sm sm:text-base"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-black text-gray-800 mt-1 sm:mt-2" id="kpiTotalFamilies">0</div>
+          <div class="text-[10px] text-emerald-700 font-medium mt-0.5 truncate">
+            <i class="fa-solid fa-chart-line mr-1"></i>பதிவு பெற்றவை
+          </div>
+        </div>
+
+        <!-- Total Population -->
+        <div class="glass-card p-3 sm:p-4 rounded-2xl shadow-sm border-l-4 border-blue-600 hover:shadow-md transition">
+          <div class="flex items-center justify-between text-gray-500 text-[11px] sm:text-xs">
+            <span>சனத்தொகை</span>
+            <i class="fa-solid fa-users text-blue-600 text-sm sm:text-base"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-black text-gray-800 mt-1 sm:mt-2" id="kpiTotalPopulation">0</div>
+          <div class="text-[10px] text-gray-500 mt-0.5 truncate" id="kpiPopulationSplit">ஆண்: 0 | பெண்: 0</div>
+        </div>
+
+        <!-- Subscription Rate -->
+        <div class="glass-card p-3 sm:p-4 rounded-2xl shadow-sm border-l-4 border-gold-500 hover:shadow-md transition cursor-pointer" onclick="switchTab('tab-subscription')">
+          <div class="flex items-center justify-between text-gray-500 text-[11px] sm:text-xs">
+            <span>சந்தா வசூல்</span>
+            <i class="fa-solid fa-receipt text-gold-600 text-sm sm:text-base"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-black text-gray-800 mt-1 sm:mt-2" id="kpiSubscriptionRate">0%</div>
+          <div class="text-[10px] text-gold-700 font-medium mt-0.5 truncate">இம்மா மாத நிலை</div>
+        </div>
+
+        <!-- General Fund Balance -->
+        <div class="glass-card p-3 sm:p-4 rounded-2xl shadow-sm border-l-4 border-green-600 hover:shadow-md transition cursor-pointer" onclick="switchTab('tab-subscription')">
+          <div class="flex items-center justify-between text-gray-500 text-[11px] sm:text-xs">
+            <span>பொது நிதி</span>
+            <i class="fa-solid fa-vault text-green-600 text-sm sm:text-base"></i>
+          </div>
+          <div class="text-sm sm:text-lg font-bold text-gray-800 mt-1 sm:mt-2 truncate" id="kpiGeneralFund">Rs. 0</div>
+          <div class="text-[10px] text-green-700 font-medium mt-0.5 truncate">வங்கி & காசு</div>
+        </div>
+
+        <!-- Zakat Beneficiaries -->
+        <div class="glass-card p-3 sm:p-4 rounded-2xl shadow-sm border-l-4 border-purple-600 hover:shadow-md transition cursor-pointer" onclick="switchTab('tab-zakat')">
+          <div class="flex items-center justify-between text-gray-500 text-[11px] sm:text-xs">
+            <span>ஸகாத் தகுதி</span>
+            <i class="fa-solid fa-hand-holding-heart text-purple-600 text-sm sm:text-base"></i>
+          </div>
+          <div class="text-xl sm:text-2xl font-black text-gray-800 mt-1 sm:mt-2" id="kpiZakatCount">0</div>
+          <div class="text-[10px] text-purple-700 font-medium mt-0.5 truncate">பயனாளிகள்</div>
+        </div>
+
+        <!-- Janaza Fund Balance -->
+        <div class="glass-card p-3 sm:p-4 rounded-2xl shadow-sm border-l-4 border-teal-600 hover:shadow-md transition cursor-pointer" onclick="switchTab('tab-nikah-janaza')">
+          <div class="flex items-center justify-between text-gray-500 text-[11px] sm:text-xs">
+            <span>ஜனாஸா நிதி</span>
+            <i class="fa-solid fa-hands-holding text-teal-600 text-sm sm:text-base"></i>
+          </div>
+          <div class="text-sm sm:text-lg font-bold text-gray-800 mt-1 sm:mt-2 truncate" id="kpiJanazaFund">Rs. 0</div>
+          <div class="text-[10px] text-teal-700 font-medium mt-0.5 truncate">மரண நிதியம்</div>
+        </div>
+
+      </div>
+
+      <!-- Trustees Section -->
+      <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 sm:mb-6 border-b border-gray-100 pb-3">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-users-gear text-mosque-800"></i>
+              நம்பிக்கையாளர் பொறுப்பு சபை & நிருவாகிகள்
+            </h3>
+            <p class="text-[11px] sm:text-xs text-gray-500">பள்ளிவாசல் சாசனத்தின் படி அங்கீகரிக்கப்பட்ட உத்தியோகபூர்வ நிருவாகிகள்</p>
+          </div>
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold" id="trusteeCountBadge">
+            உறுப்பினர்கள்: 0
+          </span>
+        </div>
+
+        <!-- Trustees Grid Cards -->
+        <div id="trusteeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Dynamically Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Financial Chart & Mosque Notice Board Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Monthly Subscription & Cash Flow Chart -->
+        <div class="lg:col-span-2 glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h4 class="font-bold text-gray-800 text-xs sm:text-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-chart-column text-gold-600"></i>
+                மாதாந்த சந்தா வசூல் மற்றும் நிலுவை ஒப்பீடு (LKR)
+              </h4>
+              <p class="text-[10px] sm:text-xs text-gray-500">2026 மாதாந்த நிதிப் புள்ளிவிபரம்</p>
+            </div>
+          </div>
+          <div class="h-56 sm:h-64 relative">
+            <canvas id="financeChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Mosque Official Notice Board -->
+        <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 flex flex-col">
+          <div class="flex items-center justify-between mb-3 border-b pb-2">
+            <h4 class="font-bold text-gray-800 text-xs sm:text-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-bullhorn text-gold-500"></i>
+              சுற்றறிக்கைகள் & அறிவிப்புகள்
+            </h4>
+            <span class="text-[9px] sm:text-[10px] bg-gold-100 text-gold-800 font-bold px-2 py-0.5 rounded-full">Notice Board</span>
+          </div>
+          
+          <div id="noticeList" class="space-y-2.5 flex-1 overflow-y-auto max-h-60 pr-1">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 2: மஹல்லா & குடும்ப மக்கள் தொகை கணக்கெடுப்பு (CENSUS) ================= -->
+    <section id="tab-census" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <!-- Toolbar & Actions -->
+      <div class="glass-card rounded-2xl p-4 sm:p-5 shadow-sm border border-emerald-100 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-people-roof text-mosque-800"></i>
+            மஹல்லா குடும்பங்கள் & மக்கள் தொகை கணக்கெடுப்பு
+          </h2>
+          <p class="text-[11px] sm:text-xs text-gray-500">ஊரின் அனைத்து குடும்பங்கள், இரத்த வகை, கல்வி மற்றும் தொடர்பு விபரம்</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Zone Filter -->
+          <select id="censusZoneFilter" onchange="filterCensusTable()" class="bg-white border border-gray-300 text-xs rounded-xl px-2.5 py-2 text-gray-700 focus:ring-2 focus:ring-mosque-800 flex-1 sm:flex-none">
+            <option value="ALL">அனைத்து பிரிவுகள் (All Zones)</option>
+            <option value="பிரிவு 01">பிரிவு 01 (மெயின் வீதி)</option>
+            <option value="பிரிவு 02">பிரிவு 02 (பள்ளி ஒழுங்கை)</option>
+            <option value="பிரிவு 03">பிரிவு 03 (தோட்ட ஒழுங்கை)</option>
+            <option value="பிரிவு 04">பிரிவு 04 (கல்லூரி வீதி)</option>
+          </select>
+
+          <!-- Economic Filter -->
+          <select id="censusCategoryFilter" onchange="filterCensusTable()" class="bg-white border border-gray-300 text-xs rounded-xl px-2.5 py-2 text-gray-700 focus:ring-2 focus:ring-mosque-800 flex-1 sm:flex-none">
+            <option value="ALL">அனைத்து வர்க்கம் (Category)</option>
+            <option value="Cat-A">Cat-A (வசதியானோர்)</option>
+            <option value="Cat-B">Cat-B (நடுத்தர வர்க்கம்)</option>
+            <option value="Cat-C">Cat-C (ஸகாத் தகுதியுடையோர்)</option>
+          </select>
+
+          <button onclick="exportCensusCSV()" class="bg-emerald-100 hover:bg-emerald-200 text-mosque-900 text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+            <i class="fa-solid fa-file-excel"></i>
+            <span class="hidden sm:inline">CSV Export</span>
+          </button>
+
+          <button onclick="openAddFamilyModal()" class="w-full sm:w-auto bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2">
+            <i class="fa-solid fa-plus text-gold-400"></i>
+            <span>+ புதிய குடும்பப் பதிவு</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Card List View for Phones -->
+      <div id="censusMobileCardList" class="space-y-3 sm:hidden">
+        <!-- Dynamically rendered mobile cards -->
+      </div>
+
+      <!-- Census Data Table for Desktop -->
+      <div class="glass-card rounded-2xl shadow-sm border border-emerald-100 overflow-hidden hidden sm:block">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-gray-600">
+            <thead class="bg-mosque-900 text-white uppercase text-[11px] font-semibold tracking-wider">
+              <tr>
+                <th class="p-3.5 text-center">புகைப்படம்</th>
+                <th class="p-3.5">குடும்ப இல. / தலைவர்</th>
+                <th class="p-3.5">NIC & தொடர்பு</th>
+                <th class="p-3.5">பிரிவு / முகவரி</th>
+                <th class="p-3.5 text-center">உறுப்பினர்கள்</th>
+                <th class="p-3.5 text-center">பொருளாதார நிலை</th>
+                <th class="p-3.5 text-center">செயல்கள்</th>
+              </tr>
+            </thead>
+            <tbody id="censusTableBody" class="divide-y divide-gray-200">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 3: மாதாந்த சந்தா & பள்ளிவாசல் நிதி (SUBSCRIPTION & ERP) ================= -->
+    <section id="tab-subscription" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <!-- Subscription Top Summary & Matrix -->
+      <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b pb-3">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-hand-holding-dollar text-mosque-800"></i>
+              மாதாந்த சந்தா கொடுப்பனவு மேட்ரிக்ஸ்
+            </h2>
+            <p class="text-[11px] sm:text-xs text-gray-500">பச்சை ✓ = செலுத்தப்பட்டது | சிவப்பு • = நிலுவை (தொட்டு மாற்றலாம்)</p>
+          </div>
+          
+          <div class="flex items-center gap-2 text-xs">
+            <span class="px-2.5 py-1 bg-green-100 text-green-800 rounded-lg font-semibold">
+              <i class="fa-solid fa-check text-green-600 mr-1"></i>Paid
+            </span>
+            <span class="px-2.5 py-1 bg-red-100 text-red-800 rounded-lg font-semibold">
+              <i class="fa-solid fa-circle text-red-500 mr-1 text-[8px]"></i>Due
+            </span>
+          </div>
+        </div>
+
+        <!-- 12-Month Matrix Table -->
+        <div class="overflow-x-auto -mx-2 sm:mx-0">
+          <table class="w-full text-xs text-left text-gray-700 min-w-[650px] sm:min-w-full">
+            <thead class="bg-gray-100 font-bold text-[10px] sm:text-[11px] text-gray-700 uppercase">
+              <tr>
+                <th class="p-2 sm:p-2.5">குடும்பம்</th>
+                <th class="p-2 sm:p-2.5 text-center">சந்தா</th>
+                <th class="p-1.5 text-center">ஜன</th>
+                <th class="p-1.5 text-center">பெப்</th>
+                <th class="p-1.5 text-center">மார்</th>
+                <th class="p-1.5 text-center">ஏப்</th>
+                <th class="p-1.5 text-center">மே</th>
+                <th class="p-1.5 text-center">ஜூன்</th>
+                <th class="p-1.5 text-center">ஜூலை</th>
+                <th class="p-1.5 text-center">ஆக</th>
+                <th class="p-1.5 text-center">செப்</th>
+                <th class="p-1.5 text-center">அக்</th>
+                <th class="p-1.5 text-center">நவ</th>
+                <th class="p-1.5 text-center">டிச</th>
+                <th class="p-2 sm:p-2.5 text-center">WhatsApp ரசீது</th>
+              </tr>
+            </thead>
+            <tbody id="subMatrixBody" class="divide-y divide-gray-200">
+              <!-- Dynamically Generated Matrix -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Financial Ledger & Vouchers -->
+      <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b pb-3">
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2">
+              <i class="fa-solid fa-book-bookmark text-gold-600"></i>
+              பள்ளிவாசல் வரவு - செலவு வவுச்சர்கள் & கணக்குப் புத்தகம்
+            </h3>
+            <p class="text-[11px] sm:text-xs text-gray-500">பொது நிதி, வக்ஃபு வாடகை, ஸகாத் மற்றும் நலன்புரி நிதிகள்</p>
+          </div>
+
+          <button onclick="openAddVoucherModal()" class="w-full sm:w-auto bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2">
+            <i class="fa-solid fa-plus text-gold-400"></i>
+            <span>+ வவுச்சர் பதிவு</span>
+          </button>
+        </div>
+
+        <!-- Ledger Table -->
+        <div class="overflow-x-auto -mx-2 sm:mx-0">
+          <table class="w-full text-left text-xs text-gray-600 min-w-[500px] sm:min-w-full">
+            <thead class="bg-gray-100 text-gray-700 font-bold uppercase text-[10px] sm:text-[11px]">
+              <tr>
+                <th class="p-2.5 sm:p-3">வவுச்சர் / திகதி</th>
+                <th class="p-2.5 sm:p-3">நிதியம் (Fund)</th>
+                <th class="p-2.5 sm:p-3">விபரம்</th>
+                <th class="p-2.5 sm:p-3 text-center">வகை</th>
+                <th class="p-2.5 sm:p-3 text-right">தொகை (LKR)</th>
+                <th class="p-2.5 sm:p-3 text-center">முறை</th>
+              </tr>
+            </thead>
+            <tbody id="voucherTableBody" class="divide-y divide-gray-200">
+              <!-- Dynamically rendered -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 4: ஸகாத் & நிவாரண மேலாண்மை (ZAKAT & WELFARE) ================= -->
+    <section id="tab-zakat" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <div class="glass-card rounded-2xl p-4 sm:p-5 shadow-sm border border-emerald-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-handshake-angle text-purple-700"></i>
+            ஸகாத், சதகா & சமூக நலன்புரி மேலாண்மை
+          </h2>
+          <p class="text-[11px] sm:text-xs text-gray-500">வறியவர்கள், விதவைகள், அனாதைகள் மற்றும் நோயாளிகள் உதவிப் பட்டியல்</p>
+        </div>
+
+        <button onclick="openAddZakatModal()" class="w-full sm:w-auto bg-purple-800 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus text-gold-400"></i>
+          <span>+ புதிய பயனாளி சேர்க்க</span>
+        </button>
+      </div>
+
+      <!-- Zakat Beneficiaries Grid / Table -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4" id="zakatCardsGrid">
+        <!-- Dynamically rendered Zakat Beneficiary Cards -->
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 5: நிக்காஹ் & ஜனாஸா மேலாண்மை (NIKAH & JANAZA) ================= -->
+    <section id="tab-nikah-janaza" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        
+        <!-- Nikah Marriage Registry -->
+        <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 space-y-3">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-ring text-pink-600"></i>
+                நிக்காஹ் திருமணப் பதிவேடு
+              </h3>
+              <p class="text-[10px] sm:text-[11px] text-gray-500">பள்ளிவாசலில் பதிவு செய்யப்பட்ட நிக்காஹ் விபரங்கள்</p>
+            </div>
+            <button onclick="openAddNikahModal()" class="bg-pink-700 hover:bg-pink-800 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
+              <i class="fa-solid fa-plus text-xs"></i>
+              <span>+ பதிவு</span>
+            </button>
+          </div>
+
+          <div id="nikahList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <!-- Dynamically populated Nikah records -->
+          </div>
+        </div>
+
+        <!-- Janaza Death & Cemetery Registry -->
+        <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 space-y-3">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-monument text-teal-700"></i>
+                ஜனாஸா & மையவாடி அடக்கப் பதிவேடு
+              </h3>
+              <p class="text-[10px] sm:text-[11px] text-gray-500">மரணமடைந்தோர் விபரம் மற்றும் மையவாடி அடக்க இலக்கம்</p>
+            </div>
+            <button onclick="openAddJanazaModal()" class="bg-teal-800 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1">
+              <i class="fa-solid fa-plus text-xs"></i>
+              <span>+ பதிவு</span>
+            </button>
+          </div>
+
+          <div id="janazaList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <!-- Dynamically populated Janaza records -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 6: மக்தப், மத்ரஸா & கல்வி (MADRASA & EDUCATION) ================= -->
+    <section id="tab-madrasa" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <div class="glass-card rounded-2xl p-4 sm:p-5 shadow-sm border border-emerald-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-book-quran text-mosque-800"></i>
+            மக்தப், மத்ரஸா & அல்குர்ஆன் கல்விப் பிரிவு
+          </h2>
+          <p class="text-[11px] sm:text-xs text-gray-500">மாணவர் விபரம், குர்ஆன் வகுப்புகள் மற்றும் கட்டண மேலாண்மை</p>
+        </div>
+
+        <button onclick="openAddStudentModal()" class="w-full sm:w-auto bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2">
+          <i class="fa-solid fa-user-graduate text-gold-400"></i>
+          <span>+ புதிய மாணவர் சேர்க்கை</span>
+        </button>
+      </div>
+
+      <!-- Madrasa Students Table -->
+      <div class="glass-card rounded-2xl shadow-sm border border-emerald-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-gray-600 min-w-[500px] sm:min-w-full">
+            <thead class="bg-mosque-900 text-white uppercase text-[10px] sm:text-[11px] font-semibold">
+              <tr>
+                <th class="p-2.5 sm:p-3 text-center">புகைப்படம்</th>
+                <th class="p-2.5 sm:p-3">மாணவர் பெயர் / இலக்கம்</th>
+                <th class="p-2.5 sm:p-3">தரம் / வகுப்பு</th>
+                <th class="p-2.5 sm:p-3">பெற்றோர் / தொலைபேசி</th>
+                <th class="p-2.5 sm:p-3 text-center">மாதக் கட்டணம்</th>
+                <th class="p-2.5 sm:p-3 text-center">நிலை</th>
+                <th class="p-2.5 sm:p-3 text-center">செயல்</th>
+              </tr>
+            </thead>
+            <tbody id="madrasaTableBody" class="divide-y divide-gray-200">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 7: வக்ஃபு சொத்துக்கள் & வாடகை (WAQF ASSETS) ================= -->
+    <section id="tab-waqf" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <div class="glass-card rounded-2xl p-4 sm:p-5 shadow-sm border border-emerald-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-building-columns text-amber-700"></i>
+            பள்ளிவாசல் வக்ஃபு சொத்துக்கள் & வாடகை நிர்வாகம்
+          </h2>
+          <p class="text-[11px] sm:text-xs text-gray-500">பள்ளிவாசலுக்குரிய கடைகள், கட்டடங்கள் மற்றும் குத்தகைதாரர்கள்</p>
+        </div>
+
+        <button onclick="openAddWaqfModal()" class="w-full sm:w-auto bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus text-white"></i>
+          <span>+ புதிய சொத்து பதிவு</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" id="waqfCardsGrid">
+        <!-- Dynamically rendered Waqf Properties -->
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 8: காப்பகம் & அமைப்புகள் (ADMIN & ARCHIVE) ================= -->
+    <section id="tab-admin" class="tab-content hidden space-y-4 sm:space-y-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Meeting Resolutions / Minutes -->
+        <div class="lg:col-span-2 glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 space-y-3">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-file-signature text-mosque-800"></i>
+                சபை தீர்மானங்கள் & கூட்டக் குறிப்புகள்
+              </h3>
+              <p class="text-[10px] sm:text-xs text-gray-500">நம்பிக்கையாளர் சபை உத்தியோகபூர்வ தீர்மானங்கள்</p>
+            </div>
+            <button onclick="openAddResolutionModal()" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+              <i class="fa-solid fa-plus text-gold-400"></i>
+              <span>+ தீர்மானம்</span>
+            </button>
+          </div>
+
+          <div id="resolutionsList" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <!-- Dynamically populated resolutions -->
+          </div>
+        </div>
+
+        <!-- Database Backup, Restore & System Settings -->
+        <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-sm border border-emerald-100 space-y-4">
+          <h3 class="text-base font-bold text-gray-800 flex items-center gap-2 border-b pb-3">
+            <i class="fa-solid fa-database text-gold-600"></i>
+            டேட்டாபேஸ் பேக்கப் & அமைப்புகள்
+          </h3>
+          
+          <div class="space-y-3 text-xs">
+            <p class="text-gray-600 text-[11px] sm:text-xs">
+              உங்கள் பள்ளிவாசலின் முழுமையான தரவுகளையும் மொபைலிலேயே பத்திரமாக Backup எடுத்து வைக்கலாம்.
+            </p>
+
+            <button onclick="openShareAppModal()" class="w-full bg-green-700 hover:bg-green-600 text-white font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow">
+              <i class="fa-brands fa-whatsapp text-white text-base"></i>
+              <span>மொபைல் லிங்க்கை வாட்ஸ்அப்பில் பகிர்க</span>
+            </button>
+
+            <button onclick="exportFullDatabaseJSON()" class="w-full bg-emerald-800 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition shadow">
+              <i class="fa-solid fa-cloud-arrow-down text-gold-400"></i>
+              <span>முழு தரவை பதிவிறக்குக (JSON Backup)</span>
+            </button>
+
+            <div class="relative">
+              <input type="file" id="importJsonInput" accept=".json" class="hidden" onchange="importFullDatabaseJSON(event)">
+              <button onclick="document.getElementById('importJsonInput').click()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 border border-gray-300 transition">
+                <i class="fa-solid fa-cloud-arrow-up text-mosque-800"></i>
+                <span>பேக்கப் கோப்பை மீள நிறுவுக (Restore)</span>
+              </button>
+            </div>
+
+            <hr class="my-2 border-gray-200">
+
+            <button onclick="resetToSampleData()" class="w-full bg-red-50 hover:bg-red-100 text-red-700 font-semibold py-2 px-4 rounded-xl flex items-center justify-center gap-2 border border-red-200 transition text-[11px]">
+              <i class="fa-solid fa-arrows-rotate text-red-600"></i>
+              <span>மாதிரித் தரவுகளை மீளமை (Reset Demo)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= MOBILE BOTTOM NAVIGATION BAR (FIXED) ================= -->
+  <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-mosque-950/98 backdrop-blur border-t border-emerald-800 shadow-2xl px-2 py-1.5 flex items-center justify-around text-center text-[10px] text-gray-400 no-print" style="padding-bottom: max(6px, env(safe-area-inset-bottom));">
+    
+    <button onclick="switchTab('tab-dashboard')" id="m-btn-tab-dashboard" class="mobile-nav-btn flex flex-col items-center gap-0.5 py-1 px-2 rounded-xl text-gold-400 font-bold transition">
+      <i class="fa-solid fa-gauge-high text-base"></i>
+      <span>முகப்பு</span>
+    </button>
+
+    <button onclick="switchTab('tab-census')" id="m-btn-tab-census" class="mobile-nav-btn flex flex-col items-center gap-0.5 py-1 px-2 rounded-xl text-gray-300 transition">
+      <i class="fa-solid fa-people-roof text-base"></i>
+      <span>குடும்பம்</span>
+    </button>
+
+    <button onclick="switchTab('tab-subscription')" id="m-btn-tab-subscription" class="mobile-nav-btn flex flex-col items-center gap-0.5 py-1 px-2 rounded-xl text-gray-300 transition">
+      <i class="fa-solid fa-hand-holding-dollar text-base"></i>
+      <span>சந்தா</span>
+    </button>
+
+    <button onclick="switchTab('tab-zakat')" id="m-btn-tab-zakat" class="mobile-nav-btn flex flex-col items-center gap-0.5 py-1 px-2 rounded-xl text-gray-300 transition">
+      <i class="fa-solid fa-handshake-angle text-base"></i>
+      <span>ஸகாத்</span>
+    </button>
+
+    <button onclick="openMobileMenuModal()" class="flex flex-col items-center gap-0.5 py-1 px-2 rounded-xl text-gray-300 transition">
+      <i class="fa-solid fa-ellipsis text-base"></i>
+      <span>மேலும்</span>
+    </button>
+
+  </nav>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-mosque-950 text-emerald-300/80 text-xs py-4 sm:py-5 border-t border-emerald-900/50 mt-auto no-print hidden sm:block">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2 justify-center">
+        <i class="fa-solid fa-mosque text-gold-400 text-base"></i>
+        <span class="font-bold text-white">Masjid Ceylon (மஸ்ஜித் சிலோன்)</span>
+        <span>• இலங்கை பள்ளிவாசல் & ஊர் நிர்வாக முறைமை</span>
+      </div>
+      <div class="text-[11px] text-emerald-400">
+        <i class="fa-solid fa-mobile-screen mr-1"></i>Mobile Responsive PWA Offline Ready
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- ============================ MODALS SECTION ============================= -->
+  <!-- ========================================================================= -->
+
+  <!-- MOBILE FULL MENU MODAL -->
+  <div id="modalMobileMenu" class="fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 shadow-2xl border border-emerald-200 relative overflow-y-auto max-h-[85vh]">
+      <div class="flex items-center justify-between border-b pb-3 mb-3">
+        <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
+          <i class="fa-solid fa-layer-group text-mosque-800"></i>
+          அனைத்து நிருவாகப் பிரிவுகள் (All Tabs)
+        </h3>
+        <button onclick="closeModal('modalMobileMenu')" class="text-gray-400 hover:text-gray-700 text-base p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="switchTab('tab-dashboard'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-emerald-50 text-mosque-950 font-bold border border-emerald-200 flex items-center gap-2">
+          <i class="fa-solid fa-gauge-high text-gold-600"></i> 1. முகப்பு & சபை
+        </button>
+        <button onclick="switchTab('tab-census'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-emerald-50 text-mosque-950 font-bold border border-emerald-200 flex items-center gap-2">
+          <i class="fa-solid fa-people-roof text-emerald-700"></i> 2. குடும்பங்கள்
+        </button>
+        <button onclick="switchTab('tab-subscription'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-emerald-50 text-mosque-950 font-bold border border-emerald-200 flex items-center gap-2">
+          <i class="fa-solid fa-hand-holding-dollar text-gold-600"></i> 3. சந்தா & நிதி
+        </button>
+        <button onclick="switchTab('tab-zakat'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-purple-50 text-purple-950 font-bold border border-purple-200 flex items-center gap-2">
+          <i class="fa-solid fa-handshake-angle text-purple-700"></i> 4. ஸகாத் நிதி
+        </button>
+        <button onclick="switchTab('tab-nikah-janaza'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-pink-50 text-pink-950 font-bold border border-pink-200 flex items-center gap-2">
+          <i class="fa-solid fa-heart-pulse text-pink-600"></i> 5. நிக்காஹ்/ஜனாஸா
+        </button>
+        <button onclick="switchTab('tab-madrasa'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-blue-50 text-blue-950 font-bold border border-blue-200 flex items-center gap-2">
+          <i class="fa-solid fa-book-quran text-blue-700"></i> 6. மத்ரஸா கல்வி
+        </button>
+        <button onclick="switchTab('tab-waqf'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-amber-50 text-amber-950 font-bold border border-amber-200 flex items-center gap-2">
+          <i class="fa-solid fa-building-columns text-amber-700"></i> 7. வக்ஃபு சொத்து
+        </button>
+        <button onclick="switchTab('tab-admin'); closeModal('modalMobileMenu')" class="p-3 rounded-xl bg-slate-50 text-slate-950 font-bold border border-slate-300 flex items-center gap-2">
+          <i class="fa-solid fa-folder-closed text-slate-700"></i> 8. காப்பகம்/பேக்கப்
+        </button>
+      </div>
+
+      <div class="mt-4 pt-3 border-t flex items-center justify-between text-xs">
+        <button onclick="openMosqueSettingsModal(); closeModal('modalMobileMenu')" class="text-mosque-800 font-bold flex items-center gap-1">
+          <i class="fa-solid fa-gear"></i> பள்ளிவாசல் அமைப்பு
+        </button>
+        <button onclick="openShareAppModal(); closeModal('modalMobileMenu')" class="text-green-700 font-bold flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Share
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. MOSQUE SETTINGS MODAL -->
+  <div id="modalMosqueSettings" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative animate-scaleUp">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-mosque text-mosque-800"></i>
+        பள்ளிவாசல் சுயவிபரத் திருத்தம்
+      </h3>
+      <form id="formMosqueSettings" onsubmit="saveMosqueSettings(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">பள்ளிவாசல் பெயர்</label>
+          <input type="text" id="setMosqueName" required class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-mosque-800">
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">வக்ஃபு சபை பதிவு இலக்கம்</label>
+          <input type="text" id="setWaqfNo" required class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-mosque-800">
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">ஊர் / அமைவிடம் (Location)</label>
+          <input type="text" id="setLocation" required class="w-full p-2.5 border rounded-xl focus:ring-2 focus:ring-mosque-800">
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalMosqueSettings')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold">சேமிக்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. ADD/EDIT TRUSTEE MODAL -->
+  <div id="modalAddTrustee" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative overflow-y-auto max-h-[90vh]">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-user-shield text-mosque-800"></i>
+        நம்பிக்கையாளர் சபை உறுப்பினர் பதிவு
+      </h3>
+      <form id="formAddTrustee" onsubmit="saveTrustee(event)" class="space-y-3 text-xs">
+        
+        <!-- Photo Upload Frame -->
+        <div class="flex items-center gap-3 bg-emerald-50/70 p-3 rounded-xl border border-emerald-100">
+          <div class="w-14 h-14 rounded-xl bg-gray-200 border-2 border-dashed border-emerald-500 flex items-center justify-center overflow-hidden relative cursor-pointer flex-shrink-0" onclick="document.getElementById('trusteePhotoInput').click()">
+            <img id="trusteePhotoPreview" src="" class="w-full h-full object-cover hidden">
+            <i id="trusteePhotoIcon" class="fa-solid fa-camera text-gray-400 text-base"></i>
+          </div>
+          <div class="text-xs">
+            <span class="font-semibold text-gray-800 block">பாஸ்போர்ட் புகைப்படம் (+)</span>
+            <span class="text-gray-500 text-[11px]">உறுப்பினரின் புகைப்படத்தை தேர்வு செய்க</span>
+            <input type="file" id="trusteePhotoInput" accept="image/*" class="hidden" onchange="previewImage(event, 'trusteePhotoPreview', 'trusteePhotoIcon')">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">முழுப் பெயர் *</label>
+            <input type="text" id="trusteeName" required placeholder="உதா: அல்-ஹாஜ் எம்.ஐ.எம். ரிஸ்வி" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">பதவி / வகிபாகம் *</label>
+            <select id="trusteeRole" required class="w-full p-2.5 border rounded-xl">
+              <option value="தலைவர் (President)">தலைவர் (President)</option>
+              <option value="செயலாளர் (Secretary)">செயலாளர் (Secretary)</option>
+              <option value="பொருளாளர் (Treasurer)">பொருளாளர் (Treasurer)</option>
+              <option value="உப தலைவர் (Vice President)">உப தலைவர் (Vice President)</option>
+              <option value="உப செயலாளர் (Asst Secretary)">உப செயலாளர் (Asst Secretary)</option>
+              <option value="கணக்காய்வாளர் (Auditor)">கணக்காய்வாளர் (Auditor)</option>
+              <option value="சபை உறுப்பினர் (Trustee)">சபை உறுப்பினர் (Trustee)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தேசிய அடையாள அட்டை (NIC) *</label>
+            <input type="text" id="trusteeNIC" required placeholder="198012345678" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தொடர்பு தொலைபேசி *</label>
+            <input type="tel" id="trusteePhone" required placeholder="077-1234567" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">பதவிக்காலம் (Term)</label>
+            <input type="text" id="trusteeTerm" value="2024 - 2027" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தொழில் / விபரம்</label>
+            <input type="text" id="trusteeJob" placeholder="வர்த்தகர் / அதிபர்" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddTrustee')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold">பதிவு செய்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. ADD FAMILY CENSUS MODAL -->
+  <div id="modalAddFamily" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative overflow-y-auto max-h-[90vh]">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-people-roof text-mosque-800"></i>
+        புதிய குடும்பப் பதிவேடு (Census Form)
+      </h3>
+      
+      <form id="formAddFamily" onsubmit="saveFamily(event)" class="space-y-3.5 text-xs">
+        
+        <!-- Head Photo & Main Info -->
+        <div class="flex items-center gap-3 bg-emerald-50/80 p-3 rounded-xl border border-emerald-200">
+          <div class="w-14 h-14 rounded-xl bg-gray-200 border-2 border-dashed border-emerald-500 flex items-center justify-center overflow-hidden cursor-pointer flex-shrink-0" onclick="document.getElementById('familyHeadPhoto').click()">
+            <img id="familyHeadPreview" src="" class="w-full h-full object-cover hidden">
+            <i id="familyHeadIcon" class="fa-solid fa-camera text-gray-400 text-base"></i>
+          </div>
+          <div>
+            <span class="font-bold text-gray-800 text-xs sm:text-sm">குடும்பத் தலைவர் புகைப்படம் (+)</span>
+            <p class="text-[10px] sm:text-[11px] text-gray-500">தலைவரின் பாஸ்போர்ட் போட்டோவை இணைக்கவும்</p>
+            <input type="file" id="familyHeadPhoto" accept="image/*" class="hidden" onchange="previewImage(event, 'familyHeadPreview', 'familyHeadIcon')">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">குடும்ப இலக்கம் (Census ID) *</label>
+            <input type="text" id="famCensusId" required placeholder="FAM-105" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">பிரிவு / ஒழுங்கை (Zone) *</label>
+            <select id="famZone" required class="w-full p-2.5 border rounded-xl">
+              <option value="பிரிவு 01">பிரிவு 01 (மெயின் வீதி)</option>
+              <option value="பிரிவு 02">பிரிவு 02 (பள்ளி ஒழுங்கை)</option>
+              <option value="பிரிவு 03">பிரிவு 03 (தோட்ட ஒழுங்கை)</option>
+              <option value="பிரிவு 04">பிரிவு 04 (கல்லூரி வீதி)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">பொருளாதார வகைப்பாடு *</label>
+            <select id="famCategory" required class="w-full p-2.5 border rounded-xl">
+              <option value="Cat-A">Cat-A (வசதியானோர் / கொடையாளி)</option>
+              <option value="Cat-B" selected>Cat-B (நடுத்தர வர்க்கம்)</option>
+              <option value="Cat-C">Cat-C (ஸகாத் / உதவி தகுதியுடையோர்)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">குடும்பத் தலைவர் பெயர் *</label>
+            <input type="text" id="famHeadName" required placeholder="எஸ்.எச்.எம். பாலில்" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தேசிய அடையாள அட்டை (NIC) *</label>
+            <input type="text" id="famNIC" required placeholder="197523401234" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">முகவரி *</label>
+            <input type="text" id="famAddress" required placeholder="இல. 45, மெயின் வீதி" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தொலைபேசி எண் *</label>
+            <input type="tel" id="famPhone" required placeholder="077-9876543" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+
+        <!-- Sub Members List -->
+        <div class="border-t pt-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-gray-800">குடும்ப உறுப்பினர்கள் விபரம்</span>
+            <button type="button" onclick="addMemberRow()" class="text-xs bg-emerald-100 hover:bg-emerald-200 text-mosque-900 font-bold px-2.5 py-1 rounded-lg">
+              + உறுப்பினர்
+            </button>
+          </div>
+          <div id="membersContainer" class="space-y-2">
+            <!-- Dynamic Member Rows -->
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3 border-t">
+          <button type="button" onclick="closeModal('modalAddFamily')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold">குடும்பத்தை சேமிக்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. ADD FINANCIAL VOUCHER MODAL -->
+  <div id="modalAddVoucher" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-receipt text-mosque-800"></i>
+        நிதி வவுச்சர் பதிவு (Income / Expense)
+      </h3>
+      <form id="formAddVoucher" onsubmit="saveVoucher(event)" class="space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">வகை (Type) *</label>
+            <select id="vType" required class="w-full p-2.5 border rounded-xl">
+              <option value="INCOME">வரவு (Income)</option>
+              <option value="EXPENSE">செலவு (Expense)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">திகதி (Date) *</label>
+            <input type="date" id="vDate" required class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">நிதியம் (Fund Account) *</label>
+          <select id="vFund" required class="w-full p-2.5 border rounded-xl">
+            <option value="பொது நிதி (General Fund)">பொது நிதி (General Fund)</option>
+            <option value="வக்ஃபு வாடகை நிதி (Waqf Rent)">வக்ஃபு வாடகை நிதி (Waqf Rent)</option>
+            <option value="ஸகாத் நிதி (Zakat Fund)">ஸகாத் நிதி (Zakat Fund)</option>
+            <option value="ஜனாஸா நலன்புரி நிதி (Janaza)">ஜனாஸா நலன்புரி நிதி (Janaza)</option>
+            <option value="கட்டுமான நிதி (Building Fund)">கட்டுமான நிதி (Building Fund)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தொகை (LKR) *</label>
+            <input type="number" id="vAmount" required placeholder="5000" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">முறை (Mode) *</label>
+            <select id="vMode" class="w-full p-2.5 border rounded-xl">
+              <option value="Cash">பணமாக (Cash)</option>
+              <option value="Bank Transfer">வங்கி ஊடாக (Bank)</option>
+              <option value="Cheque">காசோலை (Cheque)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">விபரம் (Description) *</label>
+          <input type="text" id="vDesc" required placeholder="மின்சார கட்டணம் / சந்தா நன்கொடை..." class="w-full p-2.5 border rounded-xl">
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddVoucher')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold">வவுச்சரை சேமிக்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. ADD ZAKAT BENEFICIARY MODAL -->
+  <div id="modalAddZakat" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-purple-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-hand-holding-heart text-purple-700"></i>
+        ஸகாத் பயனாளி பதிவு
+      </h3>
+      <form id="formAddZakat" onsubmit="saveZakat(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">பயனாளி பெயர் *</label>
+          <input type="text" id="zkName" required placeholder="பாத்திமா ரிஹானா" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">வகை (Category) *</label>
+            <select id="zkCategory" class="w-full p-2.5 border rounded-xl">
+              <option value="விதவை (Widow)">விதவை (Widow)</option>
+              <option value="அனாதை (Orphan)">அனாதை (Orphan)</option>
+              <option value="முதியோர் (Senior Citizen)">முதியோர் (Senior)</option>
+              <option value="நோயாளி (Chronic Illness)">நோயாளி (Illness)</option>
+              <option value="நாளாந்த கூலி (Daily Wage)">நாளாந்த கூலி</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">குடும்ப உறுப்பினர்</label>
+            <input type="number" id="zkFamilySize" value="3" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">புள்ளி (/100)</label>
+            <input type="number" id="zkScore" value="90" max="100" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">உதவி (LKR)</label>
+            <input type="number" id="zkAidAmount" value="7500" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">தொடர்பு எண் & முகவரி</label>
+          <input type="text" id="zkContact" placeholder="071-2345678, பள்ளி ஒழுங்கை" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddZakat')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-purple-800 hover:bg-purple-700 text-white rounded-xl font-bold">சேமிக்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. ADD NIKAH MODAL -->
+  <div id="modalAddNikah" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-pink-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-ring text-pink-600"></i>
+        நிக்காஹ் திருமணப் பதிவு
+      </h3>
+      <form id="formAddNikah" onsubmit="saveNikah(event)" class="space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">பதிவு இலக்கம் *</label>
+            <input type="text" id="nkRegNo" required placeholder="NK-2026/12" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">திகதி *</label>
+            <input type="date" id="nkDate" required class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">மணமகன் பெயர் & NIC *</label>
+          <input type="text" id="nkGroom" required placeholder="முகம்மத் ஆசிக் (1998...)" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">மணமகள் பெயர் & NIC *</label>
+          <input type="text" id="nkBride" required placeholder="பாத்திமா சப்னா (2001...)" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">வலீ (Wali)</label>
+            <input type="text" id="nkWali" placeholder="தந்தை பெயர்" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">மஹர் விபரம்</label>
+            <input type="text" id="nkMahr" placeholder="2 பவுண் தங்கம்" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddNikah')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-pink-700 hover:bg-pink-800 text-white rounded-xl font-bold">பதிவு செய்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. ADD JANAZA MODAL -->
+  <div id="modalAddJanaza" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-teal-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-monument text-teal-800"></i>
+        ஜனாஸா & அடக்கப் பதிவு
+      </h3>
+      <form id="formAddJanaza" onsubmit="saveJanaza(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">இறந்தவரின் பெயர் *</label>
+          <input type="text" id="jnName" required placeholder="மர்ஹூம் ஏ.ஆர்.எம். நியாஸ்" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">வயது</label>
+            <input type="number" id="jnAge" placeholder="68" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">அடக்க இலக்கம் (Plot No)</label>
+            <input type="text" id="jnPlot" placeholder="Plot A-45" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">மரணமடைந்த திகதி</label>
+            <input type="date" id="jnDeathDate" required class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">ஜனாஸா நிதி வழங்கல்</label>
+            <select id="jnFundStatus" class="w-full p-2.5 border rounded-xl">
+              <option value="வழங்கப்பட்டது (Paid)">வழங்கப்பட்டது (Paid)</option>
+              <option value="பரிசீலனையில்">பரிசீலனையில்</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddJanaza')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-teal-800 hover:bg-teal-700 text-white rounded-xl font-bold">பதிவு செய்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. ADD MADRASA STUDENT MODAL -->
+  <div id="modalAddStudent" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-user-graduate text-mosque-800"></i>
+        மக்தப் மாணவர் சேர்க்கை
+      </h3>
+      <form id="formAddStudent" onsubmit="saveStudent(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">மாணவர் பெயர் *</label>
+          <input type="text" id="stName" required placeholder="முகம்மத் சஹ்லான்" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">தரம் / வகுப்பு *</label>
+            <select id="stGrade" class="w-full p-2.5 border rounded-xl">
+              <option value="தரம் 1">தரம் 1</option>
+              <option value="தரம் 2">தரம் 2</option>
+              <option value="தரம் 3">தரம் 3</option>
+              <option value="தரம் 4">தரம் 4</option>
+              <option value="தரம் 5">தரம் 5</option>
+              <option value="ஹிஃப்ழு பிரிவு">ஹிஃப்ழு பிரிவு</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">மாதக் கட்டணம் (LKR)</label>
+            <input type="number" id="stFee" value="1000" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">பெற்றோர் பெயர் & போன் *</label>
+          <input type="text" id="stParent" required placeholder="எஸ். அஹமத் (077-8899001)" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddStudent')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold">சேர்க்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. ADD WAQF PROPERTY MODAL -->
+  <div id="modalAddWaqf" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-amber-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-building-columns text-amber-700"></i>
+        வக்ஃபு சொத்து & வாடகை பதிவு
+      </h3>
+      <form id="formAddWaqf" onsubmit="saveWaqf(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">சொத்தின் பெயர் / கடை எண் *</label>
+          <input type="text" id="wqTitle" required placeholder="கடை இல. 04 - மெயின் வீதி" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">குத்தகைதாரர் பெயர் *</label>
+            <input type="text" id="wqTenant" required placeholder="எம். நஸீர்" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">மாத வாடகை (LKR) *</label>
+            <input type="number" id="wqRent" required placeholder="25000" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">ஒப்பந்த கால எல்லை</label>
+            <input type="date" id="wqExpiry" class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">வாடகை நிலை</label>
+            <select id="wqStatus" class="w-full p-2.5 border rounded-xl">
+              <option value="Paid">செலுத்தப்பட்டது (Paid)</option>
+              <option value="Due">நிலுவையில் (Due)</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddWaqf')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl font-bold">சேமிக்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 10. ADD RESOLUTION MODAL -->
+  <div id="modalAddResolution" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-file-signature text-mosque-800"></i>
+        புதிய சபை தீர்மானம்
+      </h3>
+      <form id="formAddResolution" onsubmit="saveResolution(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">தீர்மான தலைப்பு *</label>
+          <input type="text" id="resTitle" required placeholder="பள்ளிவாசல் சோலார் அமைப்பு பொருத்துதல்" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">கூட்டம் வகை</label>
+            <select id="resType" class="w-full p-2.5 border rounded-xl">
+              <option value="நம்பிக்கையாளர் சபை கூட்டம்">நம்பிக்கையாளர் கூட்டம்</option>
+              <option value="வருடாந்த பொதுக்கூட்டம் (AGM)">பொதுக்கூட்டம் (AGM)</option>
+              <option value="விசேட செயற்குழு கூட்டம்">விசேட கூட்டம்</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 mb-1">திகதி *</label>
+            <input type="date" id="resDate" required class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">நிறைவேற்றப்பட்ட தீர்மானம் *</label>
+          <textarea id="resText" rows="3" required placeholder="முழு விபரங்கள்..." class="w-full p-2.5 border rounded-xl"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddResolution')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold">சேமிக்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 11. ADD NOTICE MODAL -->
+  <div id="modalAddNotice" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-gold-200 relative">
+      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-bullhorn text-gold-600"></i>
+        பொது சுற்றறிக்கை / அறிவிப்பு
+      </h3>
+      <form id="formAddNotice" onsubmit="saveNotice(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">அறிவிப்பு தலைப்பு *</label>
+          <input type="text" id="ntTitle" required placeholder="ரமழான் விசேட ஏற்பாடுகள் மற்றும் தராஹீஹ்" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">அறிவிப்பு விபரம் *</label>
+          <textarea id="ntDesc" rows="3" required placeholder="அறிவிப்பின் விபரங்களை உள்ளிடவும்..." class="w-full p-2.5 border rounded-xl"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('modalAddNotice')" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-gold-600 hover:bg-gold-500 text-white rounded-xl font-bold">வெளியிடுக</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 12. VIEW FAMILY DETAILS MODAL -->
+  <div id="modalViewFamily" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-emerald-200 relative max-h-[90vh] overflow-y-auto" id="familyPrintCard">
+      <div class="flex items-center justify-between border-b pb-3 mb-3">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-800" id="vfFamHeadName">குடும்ப அட்டை</h3>
+          <span class="text-xs text-gray-500" id="vfCensusId">FAM-101</span>
+        </div>
+        <button onclick="closeModal('modalViewFamily')" class="text-gray-400 hover:text-gray-700 text-lg no-print p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="vfContent" class="space-y-3.5 text-xs">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="flex justify-end gap-2 pt-3 border-t mt-3 no-print">
+        <button onclick="window.print()" class="px-4 py-2 bg-emerald-800 text-white rounded-xl font-semibold flex items-center gap-1.5">
+          <i class="fa-solid fa-print"></i>
+          <span>அச்சிடுக</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. WHATSAPP APP SHARE MODAL -->
+  <div id="modalShareApp" class="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden backdrop-blur-sm">
+    <div class="glass-card modal-dialog rounded-t-3xl sm:rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-green-200 relative">
+      <div class="flex items-center justify-between border-b pb-3 mb-3">
+        <h3 class="text-sm sm:text-base font-bold text-gray-800 flex items-center gap-2">
+          <i class="fa-brands fa-whatsapp text-green-600 text-lg"></i>
+          வாட்ஸ்அப் மூலம் அப்ளிகேஷனை பகிர்க
+        </h3>
+        <button onclick="closeModal('modalShareApp')" class="text-gray-400 hover:text-gray-700 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-green-950 space-y-1">
+          <p class="font-bold flex items-center gap-1.5 text-green-900">
+            <i class="fa-solid fa-mobile-screen text-sm"></i>
+            மொபைல் பிரவுசரில் பயன்படுத்தும் முறை
+          </p>
+          <p class="text-[11px] text-green-800">
+            கீழே உள்ள லிங்க்கை வாட்ஸ்அப்பில் பகிரலாம். திறந்த பின் Chrome / Safari Menu-வில் "Add to Home screen" கொடுத்தால் மொபைல் App போல ஐகானாக அமைந்துவிடும்!
+          </p>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">அப்ளிகேஷன் URL</label>
+          <div class="flex gap-2">
+            <input type="text" id="shareLiveUrlInput" class="w-full p-2.5 border rounded-xl bg-gray-50 text-gray-800 text-xs font-mono" readonly>
+            <button onclick="copyLiveAppUrl()" class="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl font-bold flex items-center gap-1" title="Copy URL">
+              <i class="fa-solid fa-copy"></i>
+              <span class="hidden sm:inline">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 mb-1">செய்தி முன்னோட்டம்</label>
+          <textarea id="shareMsgPreview" rows="4" class="w-full p-2.5 border rounded-xl text-xs bg-white text-gray-700 font-sans"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5 pt-2">
+          <button onclick="dispatchToWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition shadow">
+            <i class="fa-brands fa-whatsapp text-base"></i>
+            <span>WhatsApp-ல் அனுப்புக</span>
+          </button>
+          <button onclick="copyFullShareText()" class="w-full bg-mosque-800 hover:bg-mosque-700 text-white font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition shadow">
+            <i class="fa-solid fa-clone"></i>
+            <span>நகலெடு</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- ============================ JAVASCRIPT LOGIC =========================== -->
+  <!-- ========================================================================= -->
+  <script>
+    const STORAGE_KEY = 'MASJID_CEYLON_ERP_DATA_V1';
+
+    const defaultState = {
+      settings: {
+        mosqueName: 'மஸ்ஜித் சிலோன் ஜும்ஆ பள்ளிவாசல்',
+        waqfNo: 'WQ-8842/LK',
+        location: 'கொழும்பு 10, இலங்கை',
+        subHeading: 'நம்பிக்கையாளர் பொறுப்பு சபை & ஊர் நிர்வாக முறைமை',
+        logoDataUrl: ''
+      },
+      trustees: [
+        { id: 1, name: 'அல்-ஹாஜ் எம்.ஐ.எம். ரிஸ்வி', role: 'தலைவர் (President)', nic: '196812405678', phone: '0777123456', term: '2024 - 2027', job: 'வர்த்தகர்', photo: '' },
+        { id: 2, name: 'அஷ்-ஷைக் ஏ.ஆர்.எம். நியாஸ் (மதனி)', role: 'செயலாளர் (Secretary)', nic: '197523409876', phone: '0714567890', term: '2024 - 2027', job: 'அதிபர் / விரிவுரையாளர்', photo: '' },
+        { id: 3, name: 'அல்-ஹாஜ் எஸ்.எச்.எம். பாலில்', role: 'பொருளாளர் (Treasurer)', nic: '197211204561', phone: '0778899112', term: '2024 - 2027', job: 'கணக்காளர்', photo: '' },
+        { id: 4, name: 'எம்.கே. முஹம்மத் அஸ்வர்', role: 'உப தலைவர் (Vice President)', nic: '198034501234', phone: '0752233445', term: '2024 - 2027', job: 'பொறியியலாளர்', photo: '' }
+      ],
+      families: [
+        {
+          id: 'FAM-101',
+          headName: 'எம்.ஐ.எம். மன்சூர்',
+          nic: '197014502314',
+          phone: '0773344556',
+          address: 'இல. 24, பள்ளி ஒழுங்கை',
+          zone: 'பிரிவு 02',
+          category: 'Cat-A',
+          monthlySub: 1500,
+          photo: '',
+          members: [
+            { name: 'பாத்திமா நஸ்ரின்', rel: 'மனைவி', age: 48, blood: 'O+', job: 'இல்லத்தரசி' },
+            { name: 'முகம்மத் அதீப்', rel: 'மகன்', age: 22, blood: 'A+', job: 'மென்பொருள் பொறியாளர்' },
+            { name: 'பாத்திமா சாரா', rel: 'மகள்', age: 16, blood: 'O+', job: 'மாணவி' }
+          ],
+          subscriptions: { 'ஜன': true, 'பெப்': true, 'மார்': true, 'ஏப்': true, 'மே': true, 'ஜூன்': true, 'ஜூலை': true, 'ஆக': true, 'செப்': false, 'அக்': false, 'நவ': false, 'டிச': false }
+        },
+        {
+          id: 'FAM-102',
+          headName: 'ஏ.எல். முகம்மத் பாரூக்',
+          nic: '196521304567',
+          phone: '0712244668',
+          address: 'இல. 88, மெயின் வீதி',
+          zone: 'பிரிவு 01',
+          category: 'Cat-B',
+          monthlySub: 1000,
+          photo: '',
+          members: [
+            { name: 'ஆமினா உம்மா', rel: 'மனைவி', age: 55, blood: 'B+', job: 'இல்லத்தரசி' },
+            { name: 'பாரூக் இர்ஷாத்', rel: 'மகன்', age: 28, blood: 'B+', job: 'வெளிநாட்டு தொழில் (துபாய்)' }
+          ],
+          subscriptions: { 'ஜன': true, 'பெப்': true, 'மார்': true, 'ஏப்': true, 'மே': true, 'ஜூன்': true, 'ஜூலை': true, 'ஆக': false, 'செப்': false, 'அக்': false, 'நவ': false, 'டிச': false }
+        },
+        {
+          id: 'FAM-103',
+          headName: 'மர்ஹூம் நஸீரின் குடும்பம் (விதவை: பாத்திமா சுபைதா)',
+          nic: '197964501234',
+          phone: '0759988771',
+          address: 'இல. 12, தோட்ட ஒழுங்கை',
+          zone: 'பிரிவு 03',
+          category: 'Cat-C',
+          monthlySub: 500,
+          photo: '',
+          members: [
+            { name: 'சுபைதா உம்மா', rel: 'குடும்பத் தலைவி', age: 45, blood: 'AB+', job: 'தையல் வேலை' },
+            { name: 'நஸீர் அக்ரம்', rel: 'மகன் (அனாதை)', age: 14, blood: 'O+', job: 'மக்தப் மாணவர்' }
+          ],
+          subscriptions: { 'ஜன': true, 'பெப்': true, 'மார்': true, 'ஏப்': true, 'மே': false, 'ஜூன்': false, 'ஜூலை': false, 'ஆக': false, 'செப்': false, 'அக்': false, 'நவ': false, 'டிச': false }
+        }
+      ],
+      vouchers: [
+        { id: 'V-2026/01', date: '2026-08-10', fund: 'பொது நிதி (General Fund)', desc: 'மின்சார கட்டணம் செலுத்தல்', type: 'EXPENSE', amount: 34500, mode: 'Bank Transfer' },
+        { id: 'V-2026/02', date: '2026-08-12', fund: 'வக்ஃபு வாடகை நிதி (Waqf Rent)', desc: 'கடை இல. 01 & 02 மாதாந்த வாடகை வரவு', type: 'INCOME', amount: 55000, mode: 'Cash' },
+        { id: 'V-2026/03', date: '2026-08-15', fund: 'ஸகாத் நிதி (Zakat Fund)', desc: 'வறிய குடும்பங்களுக்கான மாதாந்த உலர் உணவு', type: 'EXPENSE', amount: 45000, mode: 'Cash' },
+        { id: 'V-2026/04', date: '2026-08-18', fund: 'ஜனாஸா நலன்புரி நிதி (Janaza)', desc: 'ஜனாஸா சந்தா நன்கொடை வரவு', type: 'INCOME', amount: 25000, mode: 'Cash' }
+      ],
+      zakatBeneficiaries: [
+        { id: 'ZK-01', name: 'பாத்திமா சுபைதா', category: 'விதவை (Widow)', size: 3, score: 95, aid: 10000, contact: '0759988771, தோட்ட ஒழுங்கை' },
+        { id: 'ZK-02', name: 'முஹம்மத் சலீம் (முதியோர்)', category: 'முதியோர் (Senior Citizen)', size: 2, score: 90, aid: 7500, contact: '0771122334, மெயின் வீதி' },
+        { id: 'ZK-03', name: 'அப்துல் ரஹீம் (நோயாளி)', category: 'நோயாளி (Chronic Illness)', size: 4, score: 88, aid: 12000, contact: '0765544332, பள்ளி ஒழுங்கை' }
+      ],
+      nikahRecords: [
+        { regNo: 'NK-2026/08', date: '2026-07-12', groom: 'முஹம்மத் அஸ்ஹர் (199612345678)', bride: 'பாத்திமா ருஷ்தா (200065401234)', wali: 'அப்துல் மஜீத்', mahr: '2 பவுண் தங்கம் (கொடுக்கப்பட்டது)' },
+        { regNo: 'NK-2026/09', date: '2026-08-02', groom: 'ஏ.ஆர். முஹம்மத் அதீப் (199834509876)', bride: 'ஸைனப் அப்ரா (200212304561)', wali: 'அஹமத் நளீர்', mahr: '100,000 LKR (ரொக்கம்)' }
+      ],
+      janazaRecords: [
+        { id: 'JN-2026/03', name: 'மர்ஹூம் ஏ.எல். அப்துல் காதர்', age: 74, date: '2026-06-22', plot: 'Plot B-14', fundStatus: 'வழங்கப்பட்டது (Paid)' },
+        { id: 'JN-2026/04', name: 'மர்ஹூமா பாத்திமா உம்முல் ஹைர்', age: 69, date: '2026-08-14', plot: 'Plot A-52', fundStatus: 'வழங்கப்பட்டது (Paid)' }
+      ],
+      students: [
+        { id: 'ST-201', name: 'முஹம்மத் அத்னான்', grade: 'தரம் 4', parent: 'எம். அன்சார் (0776655441)', fee: 1000, status: 'Paid' },
+        { id: 'ST-202', name: 'பாத்திமா அய்ரா', grade: 'தரம் 2', parent: 'எஸ். சிராஜ் (0713322110)', fee: 1000, status: 'Paid' },
+        { id: 'ST-203', name: 'முஹம்மத் சஹ்லான்', grade: 'ஹிஃப்ழு பிரிவு', parent: 'அஹமத் நியாஸ் (0751122339)', fee: 1500, status: 'Pending' }
+      ],
+      waqfProperties: [
+        { id: 'WQ-P1', title: 'கடை இல. 01 - மெயின் வீதி', tenant: 'எம். நஸீர் (தொழில்நுட்ப கடை)', rent: 30000, expiry: '2027-12-31', status: 'Paid' },
+        { id: 'WQ-P2', title: 'கடை இல. 02 - மெயின் வீதி', tenant: 'எஸ். சத்தார் (புத்தக நிலையம்)', rent: 25000, expiry: '2027-06-30', status: 'Paid' },
+        { id: 'WQ-P3', title: 'பள்ளிவாசல் தென்னந்தோட்டம் (2 ஏக்கர்)', tenant: 'ஏ. ரஷீத் (குத்தகை)', rent: 45000, expiry: '2026-10-31', status: 'Due' }
+      ],
+      resolutions: [
+        { id: 1, title: 'பள்ளிவாசல் சோலார் மின் உற்பத்தி கட்டமைப்பு பொருத்துதல்', type: 'நம்பிக்கையாளர் சபை கூட்டம்', date: '2026-07-10', text: 'மின் கட்டணத்தை குறைக்கும் முகமாக 15kW சோலார் தகடுகள் பொருத்துவதற்கு ஒருமனதாக தீர்மானிக்கப்பட்டது.' },
+        { id: 2, title: 'மக்தப் மாணவர்களுக்கான விசேட மார்க்க ஒழுக்கப் பயிற்சி', type: 'செயற்குழு கூட்டம்', date: '2026-08-01', text: 'விடுமுறை நாட்களில் மாணவர்களுக்கு விசேட பயிலரங்கு நடாத்த தீர்மானிக்கப்பட்டது.' }
+      ],
+      notices: [
+        { id: 1, title: 'ரமழான் & இப்தார் விசேட ஏற்பாடுகள்', desc: 'இவ்வருட பள்ளிவாசல் இப்தார் மற்றும் தராஹீஹ் தொழுகைக்கான நிதிப் பங்களிப்பை வழங்க விரும்புவோர் தொடர்புகொள்ளவும்.', date: '2026-08-20' },
+        { id: 2, title: 'மாதாந்த ஸகாத் & நலன்புரி நிதி விநியோகம்', desc: 'இம்மாதத்திற்கான ஸகாத் உதவித்தொகை எதிர்வரும் வெள்ளிக்கிழமை ஜும்ஆ தொழுகையின் பின் வழங்கப்படும்.', date: '2026-08-18' }
+      ]
+    };
+
+    let appState = {};
+    let financeChartInstance = null;
+
+    function initApp() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          appState = JSON.parse(stored);
+        } catch (e) {
+          appState = JSON.parse(JSON.stringify(defaultState));
+        }
+      } else {
+        appState = JSON.parse(JSON.stringify(defaultState));
+        saveState();
+      }
+
+      renderSettings();
+      renderKPIs();
+      renderTrustees();
+      renderNotices();
+      renderCensusTable();
+      renderSubscriptionMatrix();
+      renderVouchersTable();
+      renderZakatGrid();
+      renderNikahAndJanaza();
+      renderMadrasa();
+      renderWaqfGrid();
+      renderResolutions();
+      initChart();
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+    }
+
+    function showToast(msg, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const toastContent = document.getElementById('toastContent');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMsg.innerText = msg;
+      if (isSuccess) {
+        toastContent.className = "flex items-center gap-3 px-4 py-3.5 rounded-2xl shadow-2xl text-white font-medium text-xs sm:text-sm bg-emerald-700 border border-emerald-500";
+        toastIcon.className = "fa-solid fa-circle-check text-base sm:text-lg text-gold-400";
+      } else {
+        toastContent.className = "flex items-center gap-3 px-4 py-3.5 rounded-2xl shadow-2xl text-white font-medium text-xs sm:text-sm bg-red-700 border border-red-500";
+        toastIcon.className = "fa-solid fa-circle-exclamation text-base sm:text-lg text-white";
+      }
+
+      toast.classList.remove('-translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('-translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      const activeContent = document.getElementById(tabId);
+      if (activeContent) activeContent.classList.remove('hidden');
+
+      // Desktop Nav Buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active-tab', 'text-gold-400', 'bg-emerald-900/90', 'border-b-2', 'border-gold-400', 'font-semibold');
+        btn.classList.add('text-gray-300');
+      });
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('active-tab', 'text-gold-400', 'bg-emerald-900/90', 'border-b-2', 'border-gold-400', 'font-semibold');
+        activeBtn.classList.remove('text-gray-300');
+      }
+
+      // Mobile Bottom Nav Buttons
+      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+        btn.classList.remove('text-gold-400', 'font-bold');
+        btn.classList.add('text-gray-300');
+      });
+      const activeMobileBtn = document.getElementById('m-btn-' + tabId);
+      if (activeMobileBtn) {
+        activeMobileBtn.classList.add('text-gold-400', 'font-bold');
+        activeMobileBtn.classList.remove('text-gray-300');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabId === 'tab-dashboard' && financeChartInstance) {
+        financeChartInstance.resize();
+      }
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+    function openMobileMenuModal() {
+      openModal('modalMobileMenu');
+    }
+
+    function renderSettings() {
+      const s = appState.settings;
+      document.getElementById('headerMosqueName').innerText = s.mosqueName;
+      document.getElementById('dashMosqueHeading').innerText = s.mosqueName + ' - நிர்வாக சபை டாஷ்போர்டு';
+      document.getElementById('headerWaqfNo').innerHTML = `<i class="fa-solid fa-certificate mr-1"></i>${s.waqfNo}`;
+      document.getElementById('headerLocation').innerHTML = `<i class="fa-solid fa-location-dot mr-1"></i>${s.location}`;
+      
+      if (s.logoDataUrl) {
+        const logoImg = document.getElementById('mosqueLogoImg');
+        logoImg.src = s.logoDataUrl;
+        logoImg.classList.remove('hidden');
+        document.getElementById('logoDefaultIcon').classList.add('hidden');
+      }
+    }
+
+    function openMosqueSettingsModal() {
+      const s = appState.settings;
+      document.getElementById('setMosqueName').value = s.mosqueName;
+      document.getElementById('setWaqfNo').value = s.waqfNo;
+      document.getElementById('setLocation').value = s.location;
+      openModal('modalMosqueSettings');
+    }
+
+    function saveMosqueSettings(e) {
+      e.preventDefault();
+      appState.settings.mosqueName = document.getElementById('setMosqueName').value;
+      appState.settings.waqfNo = document.getElementById('setWaqfNo').value;
+      appState.settings.location = document.getElementById('setLocation').value;
+      saveState();
+      renderSettings();
+      closeModal('modalMosqueSettings');
+      showToast('பள்ளிவாசல் விபரங்கள் புதுப்பிக்கப்பட்டன!');
+    }
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        appState.settings.logoDataUrl = evt.target.result;
+        saveState();
+        renderSettings();
+        showToast('பள்ளிவாசல் லோகோ மாற்றப்பட்டது!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function previewImage(event, imgId, iconId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById(imgId);
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+        if (iconId) document.getElementById(iconId).classList.add('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderKPIs() {
+      const fams = appState.families || [];
+      document.getElementById('kpiTotalFamilies').innerText = fams.length;
+
+      let totalPop = 0;
+      let males = 0;
+      let females = 0;
+
+      fams.forEach(f => {
+        totalPop += 1;
+        males += 1;
+        if (f.members && Array.isArray(f.members)) {
+          totalPop += f.members.length;
+          f.members.forEach(m => {
+            if (m.rel.includes('மனைவி') || m.rel.includes('மகள்') || m.rel.includes('தலைவி')) females += 1;
+            else males += 1;
+          });
+        }
+      });
+
+      document.getElementById('kpiTotalPopulation').innerText = totalPop;
+      document.getElementById('kpiPopulationSplit').innerText = `ஆண்: ${males} | பெண்: ${females}`;
+
+      let paidCount = 0;
+      fams.forEach(f => {
+        if (f.subscriptions && f.subscriptions['ஆக']) paidCount++;
+      });
+      const subRate = fams.length > 0 ? Math.round((paidCount / fams.length) * 100) : 0;
+      document.getElementById('kpiSubscriptionRate').innerText = subRate + '%';
+
+      let generalBal = 0;
+      let janazaBal = 0;
+      (appState.vouchers || []).forEach(v => {
+        const amt = Number(v.amount) || 0;
+        if (v.fund.includes('பொது நிதி')) {
+          generalBal += (v.type === 'INCOME' ? amt : -amt);
+        } else if (v.fund.includes('ஜனாஸா')) {
+          janazaBal += (v.type === 'INCOME' ? amt : -amt);
+        }
+      });
+
+      document.getElementById('kpiGeneralFund').innerText = 'Rs. ' + (generalBal + 150000).toLocaleString();
+      document.getElementById('kpiJanazaFund').innerText = 'Rs. ' + (janazaBal + 85000).toLocaleString();
+      document.getElementById('kpiZakatCount').innerText = (appState.zakatBeneficiaries || []).length;
+    }
+
+    function renderTrustees() {
+      const container = document.getElementById('trusteeGrid');
+      const list = appState.trustees || [];
+      document.getElementById('trusteeCountBadge').innerText = `உறுப்பினர்கள்: ${list.length}`;
+
+      container.innerHTML = list.map(t => {
+        const cleanPhone = (t.phone || '').replace(/[^0-9]/g, '');
+        const waPhone = cleanPhone.startsWith('0') ? '94' + cleanPhone.substring(1) : cleanPhone;
+
+        return `
+          <div class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm hover:shadow-md transition flex flex-col items-center text-center relative group">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-emerald-50 border-2 border-gold-400 p-1 mb-2.5 overflow-hidden shadow-sm flex items-center justify-center">
+              ${t.photo 
+                ? `<img src="${t.photo}" class="w-full h-full object-cover rounded-xl">`
+                : `<div class="w-full h-full rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center font-bold text-xl"><i class="fa-solid fa-user-tie text-2xl"></i></div>`
+              }
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-mosque-900 mb-1 border border-emerald-200">${t.role}</span>
+            <h4 class="font-bold text-gray-800 text-xs sm:text-sm leading-tight">${t.name}</h4>
+            
+            <div class="flex items-center justify-center gap-2 mt-2 w-full">
+              <a href="tel:${t.phone}" class="flex-1 py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-bold text-[11px] flex items-center justify-center gap-1 border border-emerald-200">
+                <i class="fa-solid fa-phone text-xs"></i> <span>அழைக்க</span>
+              </a>
+              <a href="https://wa.me/${waPhone}" target="_blank" class="py-1.5 px-2.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-bold text-xs border border-green-200" title="WhatsApp">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+              </a>
+            </div>
+
+            <div class="text-[10px] text-gray-400 mt-1.5">NIC: ${t.nic} • ${t.term}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openAddTrusteeModal() {
+      document.getElementById('formAddTrustee').reset();
+      document.getElementById('trusteePhotoPreview').classList.add('hidden');
+      document.getElementById('trusteePhotoIcon').classList.remove('hidden');
+      openModal('modalAddTrustee');
+    }
+
+    function saveTrustee(e) {
+      e.preventDefault();
+      const photoImg = document.getElementById('trusteePhotoPreview');
+      const newTrustee = {
+        id: Date.now(),
+        name: document.getElementById('trusteeName').value,
+        role: document.getElementById('trusteeRole').value,
+        nic: document.getElementById('trusteeNIC').value,
+        phone: document.getElementById('trusteePhone').value,
+        term: document.getElementById('trusteeTerm').value,
+        job: document.getElementById('trusteeJob').value,
+        photo: photoImg.src && !photoImg.classList.contains('hidden') ? photoImg.src : ''
+      };
+      appState.trustees.push(newTrustee);
+      saveState();
+      renderTrustees();
+      closeModal('modalAddTrustee');
+      showToast('நம்பிக்கையாளர் சபை உறுப்பினர் பதிவு செய்யப்பட்டார்!');
+    }
+
+    function renderNotices() {
+      const container = document.getElementById('noticeList');
+      const list = appState.notices || [];
+      container.innerHTML = list.map(n => `
+        <div class="p-3 rounded-xl bg-emerald-50/70 border-l-4 border-gold-500 text-xs space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-gray-800 text-xs">${n.title}</span>
+            <span class="text-[10px] text-gray-400">${n.date}</span>
+          </div>
+          <p class="text-gray-600 text-[11px] leading-relaxed">${n.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function openAddNoticeModal() {
+      document.getElementById('formAddNotice').reset();
+      openModal('modalAddNotice');
+    }
+
+    function saveNotice(e) {
+      e.preventDefault();
+      const newNotice = {
+        id: Date.now(),
+        title: document.getElementById('ntTitle').value,
+        desc: document.getElementById('ntDesc').value,
+        date: new Date().toISOString().split('T')[0]
+      };
+      appState.notices.unshift(newNotice);
+      saveState();
+      renderNotices();
+      closeModal('modalAddNotice');
+      showToast('புதிய சுற்றறிக்கை வெளியிடப்பட்டது!');
+    }
+
+    function renderCensusTable(filteredData = null) {
+      const tbody = document.getElementById('censusTableBody');
+      const mobileList = document.getElementById('censusMobileCardList');
+      const list = filteredData || appState.families || [];
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">குடும்பப் பதிவுகள் எதுவும் காணப்படவில்லை.</td></tr>`;
+        mobileList.innerHTML = `<div class="p-6 text-center text-gray-400 glass-card rounded-2xl">பதிவுகள் எதுவும் இல்லை.</div>`;
+        return;
+      }
+
+      // 1. Desktop Table
+      tbody.innerHTML = list.map(f => {
+        let catBadge = '';
+        if (f.category === 'Cat-A') catBadge = '<span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full font-bold">Cat-A (வசதியானோர்)</span>';
+        else if (f.category === 'Cat-B') catBadge = '<span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full font-bold">Cat-B (நடுத்தரம்)</span>';
+        else catBadge = '<span class="px-2 py-0.5 bg-purple-100 text-purple-800 rounded-full font-bold">Cat-C (ஸகாத் தகுதி)</span>';
+
+        return `
+          <tr class="hover:bg-emerald-50/40 transition">
+            <td class="p-3 text-center">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 mx-auto overflow-hidden flex items-center justify-center font-bold text-mosque-900">
+                ${f.photo 
+                  ? `<img src="${f.photo}" class="w-full h-full object-cover">`
+                  : `<i class="fa-solid fa-user"></i>`
+                }
+              </div>
+            </td>
+            <td class="p-3 font-semibold text-gray-800">
+              <div class="text-xs font-bold text-mosque-900">${f.headName}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${f.id}</div>
+            </td>
+            <td class="p-3">
+              <div class="text-gray-700">${f.nic}</div>
+              <div class="text-emerald-700 font-medium">${f.phone}</div>
+            </td>
+            <td class="p-3">
+              <div class="font-medium text-gray-800">${f.zone}</div>
+              <div class="text-gray-500 text-[11px]">${f.address}</div>
+            </td>
+            <td class="p-3 text-center">
+              <span class="px-2.5 py-1 rounded-lg bg-gray-100 font-bold text-gray-700 text-xs">
+                ${(f.members ? f.members.length : 0) + 1} நபர்கள்
+              </span>
+            </td>
+            <td class="p-3 text-center">${catBadge}</td>
+            <td class="p-3 text-center">
+              <button onclick="viewFamilyCard('${f.id}')" class="p-1.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-mosque-900 font-bold text-xs" title="அட்டை பார்க்க">
+                <i class="fa-solid fa-address-card"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // 2. Mobile Card List (Ultra touch friendly for phones)
+      mobileList.innerHTML = list.map(f => {
+        const cleanPhone = (f.phone || '').replace(/[^0-9]/g, '');
+        const waPhone = cleanPhone.startsWith('0') ? '94' + cleanPhone.substring(1) : cleanPhone;
+
+        let catBadge = '';
+        if (f.category === 'Cat-A') catBadge = '<span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full font-bold text-[10px]">Cat-A</span>';
+        else if (f.category === 'Cat-B') catBadge = '<span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full font-bold text-[10px]">Cat-B</span>';
+        else catBadge = '<span class="px-2 py-0.5 bg-purple-100 text-purple-800 rounded-full font-bold text-[10px]">Cat-C</span>';
+
+        return `
+          <div class="glass-card rounded-2xl p-3.5 border border-emerald-100 shadow-sm space-y-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-11 h-11 rounded-xl bg-emerald-100 border border-emerald-300 overflow-hidden flex items-center justify-center font-bold text-mosque-900 flex-shrink-0">
+                  ${f.photo ? `<img src="${f.photo}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-user"></i>`}
+                </div>
+                <div>
+                  <h4 class="font-bold text-gray-800 text-xs">${f.headName}</h4>
+                  <div class="text-[10px] text-gray-500 font-mono">${f.id} • ${f.zone}</div>
+                </div>
+              </div>
+              <div>${catBadge}</div>
+            </div>
+
+            <div class="text-[11px] text-gray-600 bg-gray-50 p-2 rounded-xl flex justify-between items-center">
+              <span><i class="fa-solid fa-users text-emerald-700 mr-1"></i> ${(f.members ? f.members.length : 0) + 1} உறுப்பினர்கள்</span>
+              <span class="font-mono text-gray-700">NIC: ${f.nic}</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5 pt-1">
+              <a href="tel:${f.phone}" class="py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs flex items-center justify-center gap-1 border border-emerald-200">
+                <i class="fa-solid fa-phone text-[10px]"></i> <span>Call</span>
+              </a>
+              <a href="https://wa.me/${waPhone}" target="_blank" class="py-1.5 px-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-bold text-xs flex items-center justify-center gap-1 border border-green-200">
+                <i class="fa-brands fa-whatsapp text-sm"></i> <span>Chat</span>
+              </a>
+              <button onclick="viewFamilyCard('${f.id}')" class="py-1.5 px-2 bg-mosque-800 hover:bg-mosque-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1">
+                <i class="fa-solid fa-id-card text-[10px]"></i> <span>அட்டை</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterCensusTable() {
+      const zone = document.getElementById('censusZoneFilter').value;
+      const cat = document.getElementById('censusCategoryFilter').value;
+      let list = appState.families || [];
+
+      if (zone !== 'ALL') {
+        list = list.filter(f => f.zone === zone);
+      }
+      if (cat !== 'ALL') {
+        list = list.filter(f => f.category === cat);
+      }
+      renderCensusTable(list);
+    }
+
+    function openAddFamilyModal() {
+      document.getElementById('formAddFamily').reset();
+      document.getElementById('famCensusId').value = 'FAM-' + (100 + (appState.families ? appState.families.length + 1 : 1));
+      document.getElementById('membersContainer').innerHTML = '';
+      document.getElementById('familyHeadPreview').classList.add('hidden');
+      document.getElementById('familyHeadIcon').classList.remove('hidden');
+      addMemberRow();
+      openModal('modalAddFamily');
+    }
+
+    function addMemberRow() {
+      const container = document.getElementById('membersContainer');
+      const rowId = 'mem_' + Date.now();
+      const div = document.createElement('div');
+      div.id = rowId;
+      div.className = "grid grid-cols-12 gap-1.5 items-center bg-gray-50 p-2 rounded-xl border border-gray-200 text-xs";
+      div.innerHTML = `
+        <div class="col-span-4">
+          <input type="text" placeholder="பெயர்" class="w-full p-1.5 border rounded-lg mem-name" required>
+        </div>
+        <div class="col-span-3">
+          <select class="w-full p-1.5 border rounded-lg mem-rel">
+            <option value="மனைவி">மனைவி</option>
+            <option value="மகன்">மகன்</option>
+            <option value="மகள்">மகள்</option>
+            <option value="தாய்">தாய்</option>
+            <option value="தந்தை">தந்தை</option>
+          </select>
+        </div>
+        <div class="col-span-2">
+          <input type="number" placeholder="வயது" class="w-full p-1.5 border rounded-lg mem-age">
+        </div>
+        <div class="col-span-2">
+          <select class="w-full p-1.5 border rounded-lg mem-blood">
+            <option value="A+">A+</option>
+            <option value="B+">B+</option>
+            <option value="O+">O+</option>
+            <option value="AB+">AB+</option>
+            <option value="A-">A-</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="col-span-1 text-center">
+          <button type="button" onclick="document.getElementById('${rowId}').remove()" class="text-red-500 hover:text-red-700">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `;
+      container.appendChild(div);
+    }
+
+    function saveFamily(e) {
+      e.preventDefault();
+      const photoImg = document.getElementById('familyHeadPreview');
+      const members = [];
+      document.querySelectorAll('#membersContainer > div').forEach(row => {
+        const name = row.querySelector('.mem-name').value;
+        const rel = row.querySelector('.mem-rel').value;
+        const age = row.querySelector('.mem-age').value;
+        const blood = row.querySelector('.mem-blood').value;
+        if (name) members.push({ name, rel, age: Number(age) || 0, blood, job: '' });
+      });
+
+      const newFamily = {
+        id: document.getElementById('famCensusId').value,
+        headName: document.getElementById('famHeadName').value,
+        nic: document.getElementById('famNIC').value,
+        phone: document.getElementById('famPhone').value,
+        address: document.getElementById('famAddress').value,
+        zone: document.getElementById('famZone').value,
+        category: document.getElementById('famCategory').value,
+        monthlySub: 1000,
+        photo: photoImg.src && !photoImg.classList.contains('hidden') ? photoImg.src : '',
+        members: members,
+        subscriptions: { 'ஜன': true, 'பெப்': true, 'மார்': true, 'ஏப்': false, 'மே': false, 'ஜூன்': false, 'ஜூலை': false, 'ஆக': false, 'செப்': false, 'அக்': false, 'நவ': false, 'டிச': false }
+      };
+
+      appState.families.push(newFamily);
+      saveState();
+      renderCensusTable();
+      renderSubscriptionMatrix();
+      renderKPIs();
+      closeModal('modalAddFamily');
+      showToast('குடும்பம் வெற்றிகரமாக கணக்கெடுப்பில் பதிவு செய்யப்பட்டது!');
+    }
+
+    function viewFamilyCard(famId) {
+      const fam = appState.families.find(f => f.id === famId);
+      if (!fam) return;
+
+      document.getElementById('vfFamHeadName').innerText = fam.headName;
+      document.getElementById('vfCensusId').innerText = `சென்சஸ் இலக்கம்: ${fam.id} • ${fam.zone}`;
+
+      const content = document.getElementById('vfContent');
+      content.innerHTML = `
+        <div class="flex items-center gap-3 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+          <div class="w-14 h-14 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center font-bold text-xl overflow-hidden flex-shrink-0">
+            ${fam.photo ? `<img src="${fam.photo}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-house-user text-xl"></i>`}
+          </div>
+          <div>
+            <div class="font-bold text-gray-800 text-xs sm:text-sm">${fam.headName}</div>
+            <div class="text-gray-600 text-xs">NIC: ${fam.nic} | போன்: ${fam.phone}</div>
+            <div class="text-gray-500 text-[11px] mt-0.5">${fam.address}</div>
+          </div>
+        </div>
+
+        <div class="border rounded-xl p-2.5 sm:p-3">
+          <span class="font-bold text-gray-800 block mb-1.5 text-xs">குடும்ப உறுப்பினர்கள் விபரம்:</span>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-100 text-gray-600 font-semibold text-[11px]">
+                <tr>
+                  <th class="p-1.5">பெயர்</th>
+                  <th class="p-1.5">உறவு</th>
+                  <th class="p-1.5">வயது</th>
+                  <th class="p-1.5">இரத்தம்</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y text-[11px]">
+                ${(fam.members || []).map(m => `
+                  <tr>
+                    <td class="p-1.5 font-medium">${m.name}</td>
+                    <td class="p-1.5">${m.rel}</td>
+                    <td class="p-1.5">${m.age}</td>
+                    <td class="p-1.5 font-bold text-red-700">${m.blood}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      openModal('modalViewFamily');
+    }
+
+    function exportCensusCSV() {
+      const fams = appState.families || [];
+      let csv = "FamilyID,HeadName,NIC,Phone,Zone,Category,Address,TotalMembers\n";
+      fams.forEach(f => {
+        csv += `"${f.id}","${f.headName}","${f.nic}","${f.phone}","${f.zone}","${f.category}","${f.address}",${(f.members ? f.members.length : 0) + 1}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Masjid_Ceylon_Census_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      showToast('சென்சஸ் தரவு CSV ஆக பதிவிறக்கப்பட்டது!');
+    }
+
+    const MONTHS = ['ஜன', 'பெப்', 'மார்', 'ஏப்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆக', 'செப்', 'அக்', 'நவ', 'டிச'];
+
+    function renderSubscriptionMatrix() {
+      const tbody = document.getElementById('subMatrixBody');
+      const list = appState.families || [];
+
+      tbody.innerHTML = list.map(f => {
+        const subs = f.subscriptions || {};
+        return `
+          <tr class="hover:bg-gray-50 transition text-xs">
+            <td class="p-2 sm:p-2.5 font-medium text-gray-800 whitespace-nowrap">
+              <div class="font-bold text-xs">${f.headName}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${f.id}</div>
+            </td>
+            <td class="p-2 sm:p-2.5 text-center font-bold text-emerald-800 whitespace-nowrap">
+              Rs. ${f.monthlySub || 1000}
+            </td>
+            ${MONTHS.map(m => {
+              const isPaid = subs[m] === true;
+              return `
+                <td class="p-1 text-center">
+                  <button onclick="toggleMonthSub('${f.id}', '${m}')" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md font-bold text-[9px] sm:text-[10px] transition ${isPaid ? 'bg-green-600 text-white shadow-sm' : 'bg-red-100 text-red-600 hover:bg-red-200'}">
+                    ${isPaid ? '✓' : '•'}
+                  </button>
+                </td>
+              `;
+            }).join('')}
+            <td class="p-2 sm:p-2.5 text-center whitespace-nowrap">
+              <button onclick="sendWhatsAppReceipt('${f.id}')" class="px-2.5 py-1 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg text-xs flex items-center gap-1 mx-auto shadow-sm">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span class="hidden sm:inline">ரசீது</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function toggleMonthSub(famId, month) {
+      const fam = appState.families.find(f => f.id === famId);
+      if (!fam) return;
+      if (!fam.subscriptions) fam.subscriptions = {};
+      fam.subscriptions[month] = !fam.subscriptions[month];
+      saveState();
+      renderSubscriptionMatrix();
+      renderKPIs();
+      showToast(`${fam.headName} - ${month} மாத சந்தா நிலை மாற்றப்பட்டது!`);
+    }
+
+    function sendWhatsAppReceipt(famId) {
+      const fam = appState.families.find(f => f.id === famId);
+      if (!fam) return;
+
+      const mosque = appState.settings.mosqueName;
+      const text = `السلام عليكم ورحمة الله وبركاته\n\n*${mosque}*\n*சந்தா கொடுப்பனவு ரசீது*\n\nகுடும்பத் தலைவர்: ${fam.headName}\nகுடும்ப இல: ${fam.id}\nமாதாந்த சந்தா: Rs. ${fam.monthlySub}\n\nஆகஸ்ட் மாத சந்தா வெற்றிகரமாக பெறப்பட்டது. ஜஸாகல்லாஹு கைரா!`;
+      
+      const cleanPhone = (fam.phone || '').replace(/[^0-9]/g, '');
+      const waPhone = cleanPhone.startsWith('0') ? '94' + cleanPhone.substring(1) : cleanPhone;
+      const url = `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    function renderVouchersTable() {
+      const tbody = document.getElementById('voucherTableBody');
+      const list = appState.vouchers || [];
+
+      tbody.innerHTML = list.map(v => {
+        const isInc = v.type === 'INCOME';
+        return `
+          <tr class="hover:bg-gray-50 transition text-xs">
+            <td class="p-2.5 sm:p-3 font-semibold text-gray-800 whitespace-nowrap">
+              <div>${v.id}</div>
+              <div class="text-[10px] text-gray-400">${v.date}</div>
+            </td>
+            <td class="p-2.5 sm:p-3 text-mosque-900 font-medium">${v.fund}</td>
+            <td class="p-2.5 sm:p-3 text-gray-600">${v.desc}</td>
+            <td class="p-2.5 sm:p-3 text-center whitespace-nowrap">
+              <span class="px-2 py-0.5 rounded-full font-bold text-[9px] sm:text-[10px] ${isInc ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                ${isInc ? 'வரவு' : 'செலவு'}
+              </span>
+            </td>
+            <td class="p-2.5 sm:p-3 text-right font-black whitespace-nowrap ${isInc ? 'text-green-700' : 'text-red-700'}">
+              ${isInc ? '+' : '-'} Rs. ${Number(v.amount).toLocaleString()}
+            </td>
+            <td class="p-2.5 sm:p-3 text-center text-gray-500 whitespace-nowrap">${v.mode}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openAddVoucherModal() {
+      document.getElementById('formAddVoucher').reset();
+      document.getElementById('vDate').value = new Date().toISOString().split('T')[0];
+      openModal('modalAddVoucher');
+    }
+
+    function saveVoucher(e) {
+      e.preventDefault();
+      const newVoucher = {
+        id: 'V-2026/' + String((appState.vouchers ? appState.vouchers.length + 1 : 1)).padStart(2, '0'),
+        date: document.getElementById('vDate').value,
+        fund: document.getElementById('vFund').value,
+        desc: document.getElementById('vDesc').value,
+        type: document.getElementById('vType').value,
+        amount: Number(document.getElementById('vAmount').value) || 0,
+        mode: document.getElementById('vMode').value
+      };
+      appState.vouchers.unshift(newVoucher);
+      saveState();
+      renderVouchersTable();
+      renderKPIs();
+      closeModal('modalAddVoucher');
+      showToast('வவுச்சர் வெற்றிகரமாக பதிவு செய்யப்பட்டது!');
+    }
+
+    function renderZakatGrid() {
+      const container = document.getElementById('zakatCardsGrid');
+      const list = appState.zakatBeneficiaries || [];
+
+      container.innerHTML = list.map(z => `
+        <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-purple-100 shadow-sm hover:shadow-md transition space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800">${z.category}</span>
+            <span class="text-xs font-bold text-purple-700">மதிப்பீடு: ${z.score}/100</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-purple-50 text-purple-800 border border-purple-200 flex items-center justify-center font-bold text-base flex-shrink-0">
+              <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-800 text-xs sm:text-sm">${z.name}</h4>
+              <p class="text-[10px] text-gray-500">${z.contact}</p>
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded-xl flex items-center justify-between text-xs">
+            <span class="text-gray-600 text-[11px]">அங்கீகரிக்கப்பட்ட உதவி:</span>
+            <span class="font-black text-purple-900 text-xs sm:text-sm">Rs. ${Number(z.aid).toLocaleString()}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddZakatModal() {
+      document.getElementById('formAddZakat').reset();
+      openModal('modalAddZakat');
+    }
+
+    function saveZakat(e) {
+      e.preventDefault();
+      const newZk = {
+        id: 'ZK-' + String((appState.zakatBeneficiaries ? appState.zakatBeneficiaries.length + 1 : 1)),
+        name: document.getElementById('zkName').value,
+        category: document.getElementById('zkCategory').value,
+        size: Number(document.getElementById('zkFamilySize').value) || 1,
+        score: Number(document.getElementById('zkScore').value) || 80,
+        aid: Number(document.getElementById('zkAidAmount').value) || 5000,
+        contact: document.getElementById('zkContact').value
+      };
+      appState.zakatBeneficiaries.push(newZk);
+      saveState();
+      renderZakatGrid();
+      renderKPIs();
+      closeModal('modalAddZakat');
+      showToast('ஸகாத் பயனாளி பதிவு செய்யப்பட்டார்!');
+    }
+
+    function renderNikahAndJanaza() {
+      // Nikah
+      const nkContainer = document.getElementById('nikahList');
+      nkContainer.innerHTML = (appState.nikahRecords || []).map(n => `
+        <div class="p-3 bg-pink-50/50 rounded-xl border border-pink-100 text-xs space-y-1">
+          <div class="flex items-center justify-between font-bold text-pink-950">
+            <span>${n.regNo}</span>
+            <span class="text-[10px] text-gray-500">${n.date}</span>
+          </div>
+          <div class="text-gray-700"><strong>மணமகன்:</strong> ${n.groom}</div>
+          <div class="text-gray-700"><strong>மணமகள்:</strong> ${n.bride}</div>
+          <div class="text-[10px] text-pink-800"><strong>மஹர்:</strong> ${n.mahr} | <strong>வலீ:</strong> ${n.wali}</div>
+        </div>
+      `).join('');
+
+      // Janaza
+      const jnContainer = document.getElementById('janazaList');
+      jnContainer.innerHTML = (appState.janazaRecords || []).map(j => `
+        <div class="p-3 bg-teal-50/50 rounded-xl border border-teal-100 text-xs space-y-1">
+          <div class="flex items-center justify-between font-bold text-teal-950">
+            <span>${j.name} (${j.age} வயது)</span>
+            <span class="text-[10px] bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full font-bold">${j.plot}</span>
+          </div>
+          <div class="text-gray-600 text-[10px]">அடக்கம்: ${j.date} | நிதி: ${j.fundStatus}</div>
+        </div>
+      `).join('');
+    }
+
+    function openAddNikahModal() {
+      document.getElementById('formAddNikah').reset();
+      document.getElementById('nkDate').value = new Date().toISOString().split('T')[0];
+      openModal('modalAddNikah');
+    }
+    function saveNikah(e) {
+      e.preventDefault();
+      appState.nikahRecords.unshift({
+        regNo: document.getElementById('nkRegNo').value,
+        date: document.getElementById('nkDate').value,
+        groom: document.getElementById('nkGroom').value,
+        bride: document.getElementById('nkBride').value,
+        wali: document.getElementById('nkWali').value,
+        mahr: document.getElementById('nkMahr').value
+      });
+      saveState();
+      renderNikahAndJanaza();
+      closeModal('modalAddNikah');
+      showToast('நிக்காஹ் பதிவு செய்யப்பட்டது!');
+    }
+
+    function openAddJanazaModal() {
+      document.getElementById('formAddJanaza').reset();
+      document.getElementById('jnDeathDate').value = new Date().toISOString().split('T')[0];
+      openModal('modalAddJanaza');
+    }
+    function saveJanaza(e) {
+      e.preventDefault();
+      appState.janazaRecords.unshift({
+        id: 'JN-' + Date.now(),
+        name: document.getElementById('jnName').value,
+        age: document.getElementById('jnAge').value,
+        plot: document.getElementById('jnPlot').value,
+        date: document.getElementById('jnDeathDate').value,
+        fundStatus: document.getElementById('jnFundStatus').value
+      });
+      saveState();
+      renderNikahAndJanaza();
+      closeModal('modalAddJanaza');
+      showToast('ஜனாஸா பதிவு செய்யப்பட்டது!');
+    }
+
+    function renderMadrasa() {
+      const tbody = document.getElementById('madrasaTableBody');
+      tbody.innerHTML = (appState.students || []).map(s => `
+        <tr class="hover:bg-gray-50 transition text-xs">
+          <td class="p-2 sm:p-3 text-center">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-100 text-mosque-900 mx-auto flex items-center justify-center font-bold text-xs">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+          </td>
+          <td class="p-2 sm:p-3 font-semibold text-gray-800">${s.name}</td>
+          <td class="p-2 sm:p-3 text-mosque-900 font-bold">${s.grade}</td>
+          <td class="p-2 sm:p-3 text-gray-600">${s.parent}</td>
+          <td class="p-2 sm:p-3 text-center font-black">Rs. ${s.fee}</td>
+          <td class="p-2 sm:p-3 text-center">
+            <button onclick="toggleStudentStatus('${s.id}')" class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-bold ${s.status === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+              ${s.status === 'Paid' ? 'செலுத்தப்பட்டது' : 'நிலுவை'}
+            </button>
+          </td>
+          <td class="p-2 sm:p-3 text-center">
+            <button onclick="deleteStudent('${s.id}')" class="text-red-500 hover:text-red-700 text-xs p-1">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleStudentStatus(stId) {
+      const st = appState.students.find(s => s.id === stId);
+      if (!st) return;
+      st.status = st.status === 'Paid' ? 'Pending' : 'Paid';
+      saveState();
+      renderMadrasa();
+      showToast('மாணவர் கட்டண நிலை மாற்றப்பட்டது!');
+    }
+
+    function deleteStudent(stId) {
+      appState.students = appState.students.filter(s => s.id !== stId);
+      saveState();
+      renderMadrasa();
+      showToast('மாணவர் நீக்கப்பட்டார்!');
+    }
+
+    function openAddStudentModal() {
+      document.getElementById('formAddStudent').reset();
+      openModal('modalAddStudent');
+    }
+    function saveStudent(e) {
+      e.preventDefault();
+      appState.students.push({
+        id: 'ST-' + Date.now(),
+        name: document.getElementById('stName').value,
+        grade: document.getElementById('stGrade').value,
+        fee: Number(document.getElementById('stFee').value) || 1000,
+        parent: document.getElementById('stParent').value,
+        status: 'Paid'
+      });
+      saveState();
+      renderMadrasa();
+      closeModal('modalAddStudent');
+      showToast('மாணவர் சேர்க்கை பதிவு செய்யப்பட்டது!');
+    }
+
+    function renderWaqfGrid() {
+      const container = document.getElementById('waqfCardsGrid');
+      container.innerHTML = (appState.waqfProperties || []).map(w => `
+        <div class="glass-card rounded-2xl p-4 sm:p-5 border border-amber-100 shadow-sm hover:shadow-md transition space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-gray-800 text-xs sm:text-sm">${w.title}</span>
+            <span class="text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full ${w.status === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${w.status}</span>
+          </div>
+          <div class="text-[11px] text-gray-600">
+            <strong>குத்தகைதாரர்:</strong> ${w.tenant}
+          </div>
+          <div class="bg-amber-50/70 p-2.5 rounded-xl flex items-center justify-between text-xs">
+            <span class="text-gray-600 text-[11px]">மாத வாடகை:</span>
+            <span class="font-black text-amber-900 text-xs sm:text-sm">Rs. ${Number(w.rent).toLocaleString()}</span>
+          </div>
+          <div class="text-[10px] text-gray-400">முடிவு: ${w.expiry}</div>
+        </div>
+      `).join('');
+    }
+
+    function openAddWaqfModal() {
+      document.getElementById('formAddWaqf').reset();
+      openModal('modalAddWaqf');
+    }
+    function saveWaqf(e) {
+      e.preventDefault();
+      appState.waqfProperties.push({
+        id: 'WQ-P' + Date.now(),
+        title: document.getElementById('wqTitle').value,
+        tenant: document.getElementById('wqTenant').value,
+        rent: Number(document.getElementById('wqRent').value) || 0,
+        expiry: document.getElementById('wqExpiry').value,
+        status: document.getElementById('wqStatus').value
+      });
+      saveState();
+      renderWaqfGrid();
+      closeModal('modalAddWaqf');
+      showToast('வக்ஃபு சொத்து பதிவு செய்யப்பட்டது!');
+    }
+
+    function renderResolutions() {
+      const container = document.getElementById('resolutionsList');
+      container.innerHTML = (appState.resolutions || []).map(r => `
+        <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100 text-xs space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-gray-800 text-xs">${r.title}</span>
+            <span class="text-[9px] bg-emerald-100 text-mosque-900 px-2 py-0.5 rounded-full font-bold">${r.type}</span>
+          </div>
+          <p class="text-gray-600 text-[11px] leading-relaxed">${r.text}</p>
+          <div class="text-[10px] text-gray-400">திகதி: ${r.date}</div>
+        </div>
+      `).join('');
+    }
+
+    function openAddResolutionModal() {
+      document.getElementById('formAddResolution').reset();
+      document.getElementById('resDate').value = new Date().toISOString().split('T')[0];
+      openModal('modalAddResolution');
+    }
+    function saveResolution(e) {
+      e.preventDefault();
+      appState.resolutions.unshift({
+        id: Date.now(),
+        title: document.getElementById('resTitle').value,
+        type: document.getElementById('resType').value,
+        date: document.getElementById('resDate').value,
+        text: document.getElementById('resText').value
+      });
+      saveState();
+      renderResolutions();
+      closeModal('modalAddResolution');
+      showToast('சபை தீர்மானம் பதிவு செய்யப்பட்டது!');
+    }
+
+    function exportFullDatabaseJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `Masjid_Ceylon_Backup_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('முழுமையான பேக்கப் கோப்பு பதிவிறக்கப்பட்டது!');
+    }
+
+    function importFullDatabaseJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.settings && imported.families) {
+            appState = imported;
+            saveState();
+            initApp();
+            showToast('டேட்டாபேஸ் வெற்றிகரமாக மீளமைக்கப்பட்டது!');
+          } else {
+            showToast('தவறான கோப்பு வடிவம்!', false);
+          }
+        } catch (err) {
+          showToast('கோப்பை வாசிப்பதில் பிழை!', false);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetToSampleData() {
+      appState = JSON.parse(JSON.stringify(defaultState));
+      saveState();
+      initApp();
+      showToast('மாதிரித் தரவுகள் மீளமைக்கப்பட்டன!');
+    }
+
+    function handleGlobalSearch(e) {
+      const query = e.target.value.toLowerCase().trim();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (query.length > 0) clearBtn.classList.remove('hidden');
+      else clearBtn.classList.add('hidden');
+
+      if (query.length < 2) {
+        renderCensusTable();
+        return;
+      }
+
+      switchTab('tab-census');
+      const filtered = (appState.families || []).filter(f => 
+        f.headName.toLowerCase().includes(query) ||
+        f.nic.toLowerCase().includes(query) ||
+        f.phone.toLowerCase().includes(query) ||
+        f.id.toLowerCase().includes(query) ||
+        f.address.toLowerCase().includes(query)
+      );
+      renderCensusTable(filtered);
+    }
+
+    function clearGlobalSearch() {
+      const input = document.getElementById('globalSearchInput');
+      input.value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      renderCensusTable();
+    }
+
+    function printCurrentView() {
+      window.print();
+    }
+
+    function initChart() {
+      const ctx = document.getElementById('financeChart').getContext('2d');
+      if (financeChartInstance) financeChartInstance.destroy();
+
+      financeChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['ஜன', 'பெப்', 'மார்', 'ஏப்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆக', 'செப்', 'அக்', 'நவ', 'டிச'],
+          datasets: [
+            {
+              label: 'வசூலான சந்தா',
+              data: [45000, 48000, 52000, 41000, 55000, 38000, 42000, 46000, 0, 0, 0, 0],
+              backgroundColor: '#047857',
+              borderRadius: 6
+            },
+            {
+              label: 'நிலுவை (Arrears)',
+              data: [5000, 4000, 3000, 9000, 2000, 12000, 8000, 6000, 0, 0, 0, 0],
+              backgroundColor: '#f59e0b',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { font: { family: 'Noto Sans Tamil', size: 10 } }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { font: { size: 9 } }
+            },
+            x: {
+              ticks: { font: { family: 'Noto Sans Tamil', size: 9 } }
+            }
+          }
+        }
+      });
+    }
+
+    function openShareAppModal() {
+      const liveUrl = window.location.href;
+      const mosqueName = appState.settings ? appState.settings.mosqueName : 'மஸ்ஜித் சிலோன்';
+      
+      document.getElementById('shareLiveUrlInput').value = liveUrl;
+
+      const shareText = `السلام عليكم ورحمة الله وبركاته\n\n🕌 *${mosqueName}*\n_பள்ளிவாசல் & ஊர் நிர்வாக சபை ERP முறைமை_\n\nஊரின் குடும்பப் பதிவேடு, சந்தா விபரங்கள் மற்றும் சபை தகவல்களை மொபைலில் பார்வையிட கீழே உள்ள லிங்க்கை கிளிக் செய்யவும்:\n\n🔗 *லிங்க்:* ${liveUrl}\n\n📱 _குறிப்பு: லிங்க்கை Open செய்து, Browser Menu-வில் "Add to Home screen" கொடுத்தால் மொபைல் App போல உங்கள் திரையில் வந்துவிடும்._`;
+
+      document.getElementById('shareMsgPreview').value = shareText;
+      openModal('modalShareApp');
+    }
+
+    function dispatchToWhatsApp() {
+      const text = document.getElementById('shareMsgPreview').value;
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+      closeModal('modalShareApp');
+    }
+
+    function copyLiveAppUrl() {
+      const urlInput = document.getElementById('shareLiveUrlInput');
+      urlInput.select();
+      document.execCommand('copy');
+      showToast('லிங்க் வெற்றிகரமாக நகலெடுக்கப்பட்டது!');
+    }
+
+    function copyFullShareText() {
+      const textInput = document.getElementById('shareMsgPreview');
+      textInput.select();
+      document.execCommand('copy');
+      showToast('வாட்ஸ்அப் செய்தி நகலெடுக்கப்பட்டது!');
+    }
+
+    window.onload = function() {
+      initApp();
+    };
+  </script>
+</body>
+</html>
