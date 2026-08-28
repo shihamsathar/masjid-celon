@@ -75,6 +75,22 @@
       background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #047857 100%);
     }
 
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.65);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-backdrop.hidden {
+      display: none !important;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -105,7 +121,7 @@
 <body class="min-h-screen flex flex-col antialiased pb-20 sm:pb-0">
 
   <!-- ================= NOTIFICATION TOAST ================= -->
-  <div id="toast" class="fixed bottom-20 sm:bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+  <div id="toast" class="fixed bottom-20 sm:bottom-5 right-5 z-[150] transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <div id="toastContent" class="flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl text-white font-medium text-sm">
       <i id="toastIcon" class="fa-solid fa-circle-check text-lg"></i>
       <span id="toastMsg">வெற்றிகரமாக சேமிக்கப்பட்டது</span>
@@ -417,17 +433,22 @@
       </div>
     </section>
 
-    <!-- ================= TAB 3: SUBSCRIPTION ================= -->
+    <!-- ================= TAB 3: SUBSCRIPTION (சந்தா & நிதி) ================= -->
     <section id="tab-subscription" class="tab-content hidden space-y-6">
       <div class="glass-card rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-5">
-        <div class="flex items-center justify-between border-b pb-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b pb-4">
           <div>
             <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
               <i class="fa-solid fa-hand-holding-dollar text-mosque-800"></i>
               மாதாந்த சந்தா கொடுப்பனவு மேட்ரிக்ஸ்
             </h2>
-            <p class="text-xs text-gray-500">செலுத்தப்பட்டது: பச்சை ✓ | நிலுவை: சிவப்பு •</p>
+            <p class="text-xs text-gray-500">செலுத்தப்பட்டது: பச்சை ✓ | நிலுவை: சிவப்பு • (அட்டவணையில் பட்டனைத் தட்டியும் மாற்றலாம்)</p>
           </div>
+          <!-- New Dedicated Payment Button -->
+          <button type="button" onclick="openModal('modalRecordPayment')" class="bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow flex items-center gap-2 transition">
+            <i class="fa-solid fa-receipt text-gold-400"></i>
+            <span>+ சந்தா வசூல் பதிவு</span>
+          </button>
         </div>
 
         <div class="overflow-x-auto">
@@ -626,10 +647,66 @@
 
   </main>
 
-  <!-- ================= ALL MODALS SECTION ================= -->
+  <!-- ================= ALL MODALS (FIXED VISIBILITY) ================= -->
+
+  <!-- 0. Dedicated Record Subscription Payment Modal -->
+  <div id="modalRecordPayment" class="modal-backdrop hidden">
+    <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
+      <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
+        <i class="fa-solid fa-hand-holding-dollar text-emerald-800"></i>
+        சந்தா வசூல் பதிவு (Record Payment)
+      </h3>
+      <form onsubmit="saveSubscriptionPayment(event)" class="space-y-3">
+        <div>
+          <label class="block font-semibold mb-1">குடும்பத்தை தெரிவு செய்க *</label>
+          <select id="payFamilySelect" required onchange="onPaymentFamilyChange()" class="w-full p-2.5 border rounded-xl bg-white"></select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">மாதம் *</label>
+            <select id="payMonthSelect" required class="w-full p-2.5 border rounded-xl bg-white">
+              <option value="ஜன">ஜனவரி</option>
+              <option value="பெப்">பெப்ரவரி</option>
+              <option value="மார்">மார்ச்</option>
+              <option value="ஏப்">ஏப்ரல்</option>
+              <option value="மே" selected>மே</option>
+              <option value="ஜூன்">ஜூன்</option>
+              <option value="ஜூலை">ஜூலை</option>
+              <option value="ஆக">ஆகஸ்ட்</option>
+              <option value="செப்">செப்டம்பர்</option>
+              <option value="அக்">அக்டோபர்</option>
+              <option value="நவ">நவம்பர்</option>
+              <option value="டிச">டிசம்பர்</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">செலுத்திய தொகை (LKR) *</label>
+            <input type="number" id="payAmount" required class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">செலுத்திய திகதி *</label>
+            <input type="date" id="payDate" required class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">கொடுப்பனவு முறை</label>
+            <select id="payMode" class="w-full p-2.5 border rounded-xl bg-white">
+              <option value="Cash">பணமாக (Cash)</option>
+              <option value="Bank Transfer">வங்கி ஊடாக (Bank)</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('modalRecordPayment')" class="px-4 py-2 bg-gray-100 rounded-xl font-medium">இரத்து</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-800 text-white font-bold rounded-xl">பதிவு செய்க</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- 1. Mosque Settings Modal -->
-  <div id="modalMosqueSettings" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalMosqueSettings" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">பள்ளிவாசல் சுயவிபரம்</h3>
       <form onsubmit="saveMosqueSettings(event)" class="space-y-3">
@@ -654,7 +731,7 @@
   </div>
 
   <!-- 2. Add Trustee Modal -->
-  <div id="modalAddTrustee" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddTrustee" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">சபை உறுப்பினர் சேர்க்கை</h3>
       <form onsubmit="saveTrustee(event)" class="space-y-3">
@@ -685,7 +762,7 @@
   </div>
 
   <!-- 3. Add Family Modal -->
-  <div id="modalAddFamily" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddFamily" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">புதிய குடும்பப் பதிவு</h3>
       <form onsubmit="saveFamily(event)" class="space-y-3">
@@ -696,7 +773,7 @@
           </div>
           <div>
             <label class="block font-semibold mb-1">பிரிவு *</label>
-            <select id="famZone" class="w-full p-2.5 border rounded-xl">
+            <select id="famZone" class="w-full p-2.5 border rounded-xl bg-white">
               <option value="பிரிவு 01">பிரிவு 01</option>
               <option value="பிரிவு 02">பிரிவு 02</option>
               <option value="பிரிவு 03">பிரிவு 03</option>
@@ -729,7 +806,7 @@
         </div>
         <div>
           <label class="block font-semibold mb-1">பொருளாதார வகைப்பாடு</label>
-          <select id="famCategory" class="w-full p-2.5 border rounded-xl">
+          <select id="famCategory" class="w-full p-2.5 border rounded-xl bg-white">
             <option value="Cat-A">Cat-A (வசதியானோர்)</option>
             <option value="Cat-B" selected>Cat-B (நடுத்தர வர்க்கம்)</option>
             <option value="Cat-C">Cat-C (ஸகாத் தகுதியுடையோர்)</option>
@@ -744,14 +821,14 @@
   </div>
 
   <!-- 4. Add Voucher Modal -->
-  <div id="modalAddVoucher" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddVoucher" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">வவுச்சர் பதிவு</h3>
       <form onsubmit="saveVoucher(event)" class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-semibold mb-1">வகை *</label>
-            <select id="vType" class="w-full p-2.5 border rounded-xl">
+            <select id="vType" class="w-full p-2.5 border rounded-xl bg-white">
               <option value="INCOME">வரவு (Income)</option>
               <option value="EXPENSE">செலவு (Expense)</option>
             </select>
@@ -763,7 +840,7 @@
         </div>
         <div>
           <label class="block font-semibold mb-1">நிதியம் *</label>
-          <select id="vFund" class="w-full p-2.5 border rounded-xl">
+          <select id="vFund" class="w-full p-2.5 border rounded-xl bg-white">
             <option value="பொது நிதி (General Fund)">பொது நிதி (General Fund)</option>
             <option value="வக்ஃபு வாடகை நிதி">வக்ஃபு வாடகை நிதி</option>
             <option value="ஸகாத் நிதி">ஸகாத் நிதி</option>
@@ -772,7 +849,7 @@
         </div>
         <div>
           <label class="block font-semibold mb-1">விபரம் *</label>
-          <input type="text" id="vDesc" required placeholder="மின்சார கட்டணம் / சந்தா நன்கொடை..." class="w-full p-2.5 border rounded-xl">
+          <input type="text" id="vDesc" required placeholder="மின்சார கட்டணம் / நன்கொடை..." class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modalAddVoucher')" class="px-4 py-2 bg-gray-100 rounded-xl">இரத்து</button>
@@ -783,7 +860,7 @@
   </div>
 
   <!-- 5. Add Notice Modal -->
-  <div id="modalAddNotice" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddNotice" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gold-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">புதிய அறிவிப்பு</h3>
       <form onsubmit="saveNotice(event)" class="space-y-3">
@@ -804,7 +881,7 @@
   </div>
 
   <!-- 6. Add Zakat Modal (Tab 4) -->
-  <div id="modalAddZakat" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddZakat" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-purple-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <i class="fa-solid fa-hand-holding-heart text-purple-700"></i>
@@ -817,7 +894,7 @@
         </div>
         <div>
           <label class="block font-semibold mb-1">வகைப்பாடு *</label>
-          <select id="zkCategory" class="w-full p-2.5 border rounded-xl">
+          <select id="zkCategory" class="w-full p-2.5 border rounded-xl bg-white">
             <option value="விதவை (Widow)">விதவை (Widow)</option>
             <option value="அனாதை (Orphan)">அனாதை (Orphan)</option>
             <option value="நோயாளி (Illness)">நோயாளி (Illness)</option>
@@ -842,7 +919,7 @@
   </div>
 
   <!-- 7. Add Nikah Modal (Tab 5) -->
-  <div id="modalAddNikah" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddNikah" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-pink-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <i class="fa-solid fa-ring text-pink-600"></i>
@@ -880,7 +957,7 @@
   </div>
 
   <!-- 8. Add Janaza Modal (Tab 5) -->
-  <div id="modalAddJanaza" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddJanaza" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-teal-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <i class="fa-solid fa-monument text-teal-700"></i>
@@ -914,7 +991,7 @@
   </div>
 
   <!-- 9. Add Student Modal (Tab 6) -->
-  <div id="modalAddStudent" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddStudent" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <i class="fa-solid fa-user-graduate text-mosque-800"></i>
@@ -948,7 +1025,7 @@
   </div>
 
   <!-- 10. Add Waqf Modal (Tab 7) -->
-  <div id="modalAddWaqf" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddWaqf" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <i class="fa-solid fa-building-columns text-amber-700"></i>
@@ -978,7 +1055,7 @@
   </div>
 
   <!-- 11. Add Resolution Modal (Tab 8) -->
-  <div id="modalAddResolution" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+  <div id="modalAddResolution" class="modal-backdrop hidden">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <i class="fa-solid fa-file-signature text-mosque-800"></i>
@@ -1138,10 +1215,14 @@
       const m = document.getElementById(id);
       if (m) {
         m.classList.remove('hidden');
-        // Set default dates if empty
+        // Pre-fill dates
         const dateInput = m.querySelector('input[type="date"]');
         if (dateInput && !dateInput.value) {
           dateInput.value = new Date().toISOString().split('T')[0];
+        }
+        // If payment modal, populate family dropdown
+        if (id === 'modalRecordPayment') {
+          populatePaymentModal();
         }
       } 
     }
@@ -1343,6 +1424,7 @@
       a.click();
     }
 
+    // ================= TAB 3: SUBSCRIPTION PAYMENT LOGIC =================
     function renderSubscriptionMatrix() {
       const months = ['ஜன', 'பெப்', 'மார்', 'ஏப்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆக', 'செப்', 'அக்', 'நவ', 'டிச'];
       document.getElementById('subMatrixBody').innerHTML = (appState.families || []).map(f => `
@@ -1370,6 +1452,54 @@
         f.subscriptions[m] = !f.subscriptions[m];
         saveState();
         renderSubscriptionMatrix();
+      }
+    }
+
+    function populatePaymentModal() {
+      const select = document.getElementById('payFamilySelect');
+      const fams = appState.families || [];
+      select.innerHTML = fams.map(f => `<option value="${f.id}">${f.headName} (${f.id}) - Rs. ${f.monthlySub}</option>`).join('');
+      onPaymentFamilyChange();
+    }
+
+    function onPaymentFamilyChange() {
+      const famId = document.getElementById('payFamilySelect').value;
+      const f = appState.families.find(x => x.id === famId);
+      if (f) {
+        document.getElementById('payAmount').value = f.monthlySub || 1000;
+      }
+    }
+
+    function saveSubscriptionPayment(e) {
+      e.preventDefault();
+      const famId = document.getElementById('payFamilySelect').value;
+      const month = document.getElementById('payMonthSelect').value;
+      const amount = Number(document.getElementById('payAmount').value) || 0;
+      const date = document.getElementById('payDate').value;
+      const mode = document.getElementById('payMode').value;
+
+      const f = appState.families.find(x => x.id === famId);
+      if (f) {
+        if (!f.subscriptions) f.subscriptions = {};
+        f.subscriptions[month] = true;
+
+        // Auto-add income entry in Ledger Voucher
+        appState.vouchers.unshift({
+          id: 'V-' + Date.now().toString().slice(-4),
+          date: date,
+          type: 'INCOME',
+          amount: amount,
+          fund: 'பொது நிதி (General Fund)',
+          desc: `${f.headName} - ${month} மாத சந்தா வரவு`,
+          mode: mode
+        });
+
+        saveState();
+        renderSubscriptionMatrix();
+        renderVouchersTable();
+        renderKPIs();
+        closeModal('modalRecordPayment');
+        showToast(`${f.headName} - ${month} மாத சந்தா ரூ. ${amount} வரவு வைக்கப்பட்டது!`);
       }
     }
 
