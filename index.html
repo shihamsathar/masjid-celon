@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Masjid Ceylon - பள்ளிவாசல் & ஊர் நிர்வாக சபை ERP</title>
 
-  <!-- OpenGraph Meta Tags for Rich WhatsApp & Social Link Preview -->
   <meta property="og:title" content="Masjid Ceylon - பள்ளிவாசல் & ஊர் நிர்வாக முறைமை">
   <meta property="og:description" content="இலங்கை முஸ்லிம் பள்ளிவாசல் நம்பிக்கையாளர் பொறுப்பு சபை மற்றும் ஊர் நிர்வாகத்திற்கான ஸ்மார்ட் ERP டேட்டாபேஸ்.">
   <meta property="og:type" content="website">
@@ -118,7 +117,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between py-3 gap-3">
         
-        <!-- Mosque Logo & Details -->
         <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
           <div class="relative group cursor-pointer" onclick="document.getElementById('logoInput').click()" title="லோகோ மாற்ற கிளிக் செய்க">
             <div id="logoContainer" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 border-2 border-gold-400/80 p-1 flex items-center justify-center overflow-hidden shadow-inner backdrop-blur">
@@ -167,7 +165,7 @@
             </button>
           </div>
 
-          <button onclick="printCurrentView()" class="no-print bg-emerald-800/80 hover:bg-emerald-700 text-emerald-100 p-2.5 rounded-xl border border-emerald-600 transition shadow" title="அச்சிடுக (Print)">
+          <button onclick="window.print()" class="no-print bg-emerald-800/80 hover:bg-emerald-700 text-emerald-100 p-2.5 rounded-xl border border-emerald-600 transition shadow" title="அச்சிடுக (Print)">
             <i class="fa-solid fa-print"></i>
           </button>
           <button onclick="exportFullDatabaseJSON()" class="no-print bg-gold-600 hover:bg-gold-500 text-white font-medium text-xs px-3 py-2.5 rounded-xl border border-gold-400 flex items-center gap-1.5 transition shadow" title="முழுமையான பேக்கப்">
@@ -182,7 +180,7 @@
     <!-- Desktop Navigation Bar -->
     <nav class="bg-mosque-950/90 border-t border-emerald-900/60 overflow-x-auto no-print hidden sm:block">
       <div class="max-w-7xl mx-auto px-2 sm:px-4 flex gap-1 py-1.5 text-xs font-medium text-gray-300 whitespace-nowrap">
-        <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition active-tab text-gold-400 bg-emerald-900/90 border-b-2 border-gold-400 font-semibold">
+        <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-3.5 py-2 rounded-lg flex items-center gap-2 hover:bg-emerald-900/60 transition text-gold-400 bg-emerald-900/90 border-b-2 border-gold-400 font-semibold">
           <i class="fa-solid fa-gauge-high"></i>
           <span>1. முகப்பு & சபை</span>
         </button>
@@ -220,23 +218,23 @@
 
   <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
   <div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-mosque-950 border-t border-emerald-800 flex justify-around items-center py-2 px-1 text-[10px] text-gray-300 no-print">
-    <button onclick="switchTab('tab-dashboard')" class="flex flex-col items-center gap-1 text-gold-400">
+    <button onclick="switchTab('tab-dashboard')" id="mbtn-tab-dashboard" class="flex flex-col items-center gap-1 text-gold-400">
       <i class="fa-solid fa-gauge-high text-base"></i>
       <span>முகப்பு</span>
     </button>
-    <button onclick="switchTab('tab-census')" class="flex flex-col items-center gap-1 hover:text-white">
+    <button onclick="switchTab('tab-census')" id="mbtn-tab-census" class="flex flex-col items-center gap-1 hover:text-white">
       <i class="fa-solid fa-people-roof text-base"></i>
       <span>குடும்பம்</span>
     </button>
-    <button onclick="switchTab('tab-subscription')" class="flex flex-col items-center gap-1 hover:text-white">
+    <button onclick="switchTab('tab-subscription')" id="mbtn-tab-subscription" class="flex flex-col items-center gap-1 hover:text-white">
       <i class="fa-solid fa-hand-holding-dollar text-base"></i>
       <span>சந்தா</span>
     </button>
-    <button onclick="switchTab('tab-zakat')" class="flex flex-col items-center gap-1 hover:text-white">
+    <button onclick="switchTab('tab-zakat')" id="mbtn-tab-zakat" class="flex flex-col items-center gap-1 hover:text-white">
       <i class="fa-solid fa-handshake-angle text-base"></i>
       <span>ஸகாத்</span>
     </button>
-    <button onclick="switchTab('tab-admin')" class="flex flex-col items-center gap-1 hover:text-white">
+    <button onclick="switchTab('tab-admin')" id="mbtn-tab-admin" class="flex flex-col items-center gap-1 hover:text-white">
       <i class="fa-solid fa-bars text-base"></i>
       <span>மேலும்</span>
     </button>
@@ -247,7 +245,6 @@
 
     <!-- ================= TAB 1: DASHBOARD ================= -->
     <section id="tab-dashboard" class="tab-content block space-y-6">
-      
       <div class="glass-card rounded-2xl p-6 shadow-sm border border-emerald-100 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 relative overflow-hidden">
         <div class="space-y-1">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-mosque-800 text-xs font-semibold">
@@ -258,11 +255,11 @@
           <p class="text-sm text-gray-600">ஊர் மக்களின் சமூக, கல்வி, பொருளாதார மற்றும் மார்க்க நலன்களை ஒருங்கிணைக்கும் ஸ்மார்ட் முறைமை.</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
-          <button onclick="openAddTrusteeModal()" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow flex items-center gap-2 transition">
+          <button onclick="openModal('modalAddTrustee')" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow flex items-center gap-2 transition">
             <i class="fa-solid fa-user-plus text-gold-400"></i>
             <span>+ சபை உறுப்பினர்</span>
           </button>
-          <button onclick="openAddNoticeModal()" class="bg-gold-500 hover:bg-gold-600 text-mosque-950 text-xs font-bold px-4 py-2.5 rounded-xl shadow flex items-center gap-2 transition">
+          <button onclick="openModal('modalAddNotice')" class="bg-gold-500 hover:bg-gold-600 text-mosque-950 text-xs font-bold px-4 py-2.5 rounded-xl shadow flex items-center gap-2 transition">
             <i class="fa-solid fa-bullhorn"></i>
             <span>+ புதிய அறிவிப்பு</span>
           </button>
@@ -349,7 +346,7 @@
         <div class="lg:col-span-2 glass-card rounded-2xl p-6 shadow-sm border border-emerald-100">
           <h4 class="font-bold text-gray-800 text-sm mb-3 flex items-center gap-2">
             <i class="fa-solid fa-chart-column text-gold-600"></i>
-            மாதாந்த சந்தா வசூல் மற்றும் நிதி ஒப்பீடு
+            மாதாந்த சந்தா வசூல் ஒப்பீடு
           </h4>
           <div class="h-64">
             <canvas id="financeChart"></canvas>
@@ -367,7 +364,6 @@
           <div id="noticeList" class="space-y-3 flex-1 overflow-y-auto max-h-64 pr-1"></div>
         </div>
       </div>
-
     </section>
 
     <!-- ================= TAB 2: CENSUS ================= -->
@@ -382,12 +378,19 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
+          <select id="censusZoneFilter" onchange="filterCensusTable()" class="bg-white border border-gray-300 text-xs rounded-xl px-3 py-2 text-gray-700">
+            <option value="ALL">அனைத்து பிரிவுகள் (All Zones)</option>
+            <option value="பிரிவு 01">பிரிவு 01</option>
+            <option value="பிரிவு 02">பிரிவு 02</option>
+            <option value="பிரிவு 03">பிரிவு 03</option>
+          </select>
+
           <button onclick="exportCensusCSV()" class="bg-emerald-100 hover:bg-emerald-200 text-mosque-900 text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center gap-1.5">
             <i class="fa-solid fa-file-excel"></i>
             <span>Export CSV</span>
           </button>
 
-          <button onclick="openAddFamilyModal()" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow flex items-center gap-2">
+          <button onclick="openModal('modalAddFamily')" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow flex items-center gap-2">
             <i class="fa-solid fa-plus text-gold-400"></i>
             <span>+ புதிய குடும்பம்</span>
           </button>
@@ -414,7 +417,7 @@
       </div>
     </section>
 
-    <!-- ================= TAB 3: SUBSCRIPTIONS & LEDGER ================= -->
+    <!-- ================= TAB 3: SUBSCRIPTION ================= -->
     <section id="tab-subscription" class="tab-content hidden space-y-6">
       <div class="glass-card rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-5">
         <div class="flex items-center justify-between border-b pb-4">
@@ -460,7 +463,7 @@
             <i class="fa-solid fa-book-bookmark text-gold-600"></i>
             வரவு - செலவு வவுச்சர்கள் & கணக்குப் புத்தகம்
           </h3>
-          <button onclick="openAddVoucherModal()" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">
+          <button onclick="openModal('modalAddVoucher')" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">
             + வவுச்சர் சேர்க்க
           </button>
         </div>
@@ -475,6 +478,7 @@
                 <th class="p-3 text-center">வகை</th>
                 <th class="p-3 text-right">தொகை (LKR)</th>
                 <th class="p-3 text-center">முறை</th>
+                <th class="p-3 text-center">செயல்</th>
               </tr>
             </thead>
             <tbody id="voucherTableBody" class="divide-y divide-gray-200"></tbody>
@@ -493,7 +497,7 @@
           </h2>
           <p class="text-xs text-gray-500">விதவைகள், அனாதைகள், நோயாளிகள் மற்றும் நிவாரணம் பெறுவோர் பட்டியல்</p>
         </div>
-        <button onclick="openAddZakatModal()" class="bg-purple-800 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">
+        <button onclick="openModal('modalAddZakat')" class="bg-purple-800 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">
           + பயனாளி சேர்க்க
         </button>
       </div>
@@ -509,7 +513,7 @@
               <i class="fa-solid fa-ring text-pink-600"></i>
               நிக்காஹ் பதிவேடு
             </h3>
-            <button onclick="openAddNikahModal()" class="bg-pink-700 hover:bg-pink-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
+            <button onclick="openModal('modalAddNikah')" class="bg-pink-700 hover:bg-pink-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
               + பதிவு
             </button>
           </div>
@@ -522,7 +526,7 @@
               <i class="fa-solid fa-monument text-teal-700"></i>
               ஜனாஸா & அடக்கப் பதிவேடு
             </h3>
-            <button onclick="openAddJanazaModal()" class="bg-teal-800 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
+            <button onclick="openModal('modalAddJanaza')" class="bg-teal-800 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg">
               + பதிவு
             </button>
           </div>
@@ -538,7 +542,7 @@
           <i class="fa-solid fa-book-quran text-mosque-800"></i>
           மக்தப் & குர்ஆன் கல்விப் பிரிவு
         </h2>
-        <button onclick="openAddStudentModal()" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2 rounded-xl">
+        <button onclick="openModal('modalAddStudent')" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-4 py-2 rounded-xl">
           + மாணவர் சேர்க்கை
         </button>
       </div>
@@ -551,6 +555,7 @@
               <th class="p-3">பெற்றோர் தொடர்பு</th>
               <th class="p-3 text-center">கட்டணம்</th>
               <th class="p-3 text-center">நிலை</th>
+              <th class="p-3 text-center">செயல்</th>
             </tr>
           </thead>
           <tbody id="madrasaTableBody" class="divide-y divide-gray-200"></tbody>
@@ -565,7 +570,7 @@
           <i class="fa-solid fa-building-columns text-amber-700"></i>
           வக்ஃபு சொத்துக்கள் & வாடகை
         </h2>
-        <button onclick="openAddWaqfModal()" class="bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold px-4 py-2 rounded-xl">
+        <button onclick="openModal('modalAddWaqf')" class="bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold px-4 py-2 rounded-xl">
           + சொத்து பதிவு
         </button>
       </div>
@@ -581,7 +586,7 @@
               <i class="fa-solid fa-file-signature text-mosque-800"></i>
               சபை தீர்மானங்கள் (Resolutions)
             </h3>
-            <button onclick="openAddResolutionModal()" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl">
+            <button onclick="openModal('modalAddResolution')" class="bg-mosque-800 hover:bg-mosque-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl">
               + தீர்மானம்
             </button>
           </div>
@@ -593,7 +598,7 @@
             <i class="fa-solid fa-database text-gold-600"></i>
             டேட்டாபேஸ் பேக்கப்
           </h3>
-          <p class="text-xs text-gray-600">அனைத்து தரவுகளையும் கணினியில் பாதுகாப்பாகச் சேமிக்கலாம்.</p>
+          <p class="text-xs text-gray-600">அனைத்து தரவுகளையும் உங்கள் கணினியில் பாதுகாப்பாகச் சேமிக்கலாம்.</p>
           <button onclick="exportFullDatabaseJSON()" class="w-full bg-emerald-800 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition text-xs shadow">
             <i class="fa-solid fa-cloud-arrow-down text-gold-400"></i>
             <span>JSON Backup பதிவிறக்கு</span>
@@ -610,7 +615,7 @@
   </main>
 
   <!-- ================= MODALS ================= -->
-  <!-- Mosque Settings Modal -->
+  <!-- 1. Mosque Settings Modal -->
   <div id="modalMosqueSettings" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">பள்ளிவாசல் சுயவிபரம்</h3>
@@ -635,24 +640,28 @@
     </div>
   </div>
 
-  <!-- Add Trustee Modal -->
+  <!-- 2. Add Trustee Modal -->
   <div id="modalAddTrustee" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">சபை உறுப்பினர் சேர்க்கை</h3>
       <form onsubmit="saveTrustee(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">முழுப் பெயர்</label>
+          <label class="block font-semibold mb-1">முழுப் பெயர் *</label>
           <input type="text" id="trusteeName" required placeholder="அல்-ஹாஜ் எம்.ஐ.எம். ரிஸ்வி" class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">பதவி</label>
+            <label class="block font-semibold mb-1">பதவி *</label>
             <input type="text" id="trusteeRole" required placeholder="தலைவர் / செயலாளர் / பொருளாளர்" class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">தொலைபேசி</label>
+            <label class="block font-semibold mb-1">தொலைபேசி *</label>
             <input type="tel" id="trusteePhone" required placeholder="077-1234567" class="w-full p-2.5 border rounded-xl">
           </div>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">தேசிய அடையாள அட்டை (NIC)</label>
+          <input type="text" id="trusteeNIC" placeholder="197012345678" class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modalAddTrustee')" class="px-4 py-2 bg-gray-100 rounded-xl">இரத்து</button>
@@ -662,38 +671,56 @@
     </div>
   </div>
 
-  <!-- Add Family Modal -->
+  <!-- 3. Add Family Modal -->
   <div id="modalAddFamily" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">புதிய குடும்பப் பதிவு</h3>
       <form onsubmit="saveFamily(event)" class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">குடும்ப இலக்கம்</label>
+            <label class="block font-semibold mb-1">குடும்ப இலக்கம் *</label>
             <input type="text" id="famCensusId" required placeholder="FAM-105" class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">பிரிவு</label>
-            <input type="text" id="famZone" required placeholder="பிரிவு 01" class="w-full p-2.5 border rounded-xl">
+            <label class="block font-semibold mb-1">பிரிவு *</label>
+            <select id="famZone" class="w-full p-2.5 border rounded-xl">
+              <option value="பிரிவு 01">பிரிவு 01</option>
+              <option value="பிரிவு 02">பிரிவு 02</option>
+              <option value="பிரிவு 03">பிரிவு 03</option>
+            </select>
           </div>
         </div>
         <div>
-          <label class="block font-semibold mb-1">குடும்பத் தலைவர் பெயர்</label>
+          <label class="block font-semibold mb-1">குடும்பத் தலைவர் பெயர் *</label>
           <input type="text" id="famHeadName" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">NIC</label>
+            <label class="block font-semibold mb-1">NIC *</label>
             <input type="text" id="famNIC" required class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">தொலைபேசி</label>
+            <label class="block font-semibold mb-1">தொலைபேசி *</label>
             <input type="tel" id="famPhone" required class="w-full p-2.5 border rounded-xl">
           </div>
         </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold mb-1">முகவரி</label>
+            <input type="text" id="famAddress" required class="w-full p-2.5 border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">மாத சந்தா (LKR)</label>
+            <input type="number" id="famMonthlySub" value="1000" class="w-full p-2.5 border rounded-xl">
+          </div>
+        </div>
         <div>
-          <label class="block font-semibold mb-1">முகவரி</label>
-          <input type="text" id="famAddress" required class="w-full p-2.5 border rounded-xl">
+          <label class="block font-semibold mb-1">பொருளாதார வகைப்பாடு</label>
+          <select id="famCategory" class="w-full p-2.5 border rounded-xl">
+            <option value="Cat-A">Cat-A (வசதியானோர்)</option>
+            <option value="Cat-B" selected>Cat-B (நடுத்தர வர்க்கம்)</option>
+            <option value="Cat-C">Cat-C (ஸகாத் தகுதியுடையோர்)</option>
+          </select>
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modalAddFamily')" class="px-4 py-2 bg-gray-100 rounded-xl">இரத்து</button>
@@ -703,31 +730,36 @@
     </div>
   </div>
 
-  <!-- Add Voucher Modal -->
+  <!-- 4. Add Voucher Modal -->
   <div id="modalAddVoucher" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">வவுச்சர் பதிவு</h3>
       <form onsubmit="saveVoucher(event)" class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">வகை</label>
+            <label class="block font-semibold mb-1">வகை *</label>
             <select id="vType" class="w-full p-2.5 border rounded-xl">
               <option value="INCOME">வரவு (Income)</option>
               <option value="EXPENSE">செலவு (Expense)</option>
             </select>
           </div>
           <div>
-            <label class="block font-semibold mb-1">தொகை (LKR)</label>
+            <label class="block font-semibold mb-1">தொகை (LKR) *</label>
             <input type="number" id="vAmount" required class="w-full p-2.5 border rounded-xl">
           </div>
         </div>
         <div>
-          <label class="block font-semibold mb-1">நிதியம்</label>
-          <input type="text" id="vFund" value="பொது நிதி (General Fund)" class="w-full p-2.5 border rounded-xl">
+          <label class="block font-semibold mb-1">நிதியம் *</label>
+          <select id="vFund" class="w-full p-2.5 border rounded-xl">
+            <option value="பொது நிதி (General Fund)">பொது நிதி (General Fund)</option>
+            <option value="வக்ஃபு வாடகை நிதி">வக்ஃபு வாடகை நிதி</option>
+            <option value="ஸகாத் நிதி">ஸகாத் நிதி</option>
+            <option value="ஜனாஸா நலன்புரி நிதி">ஜனாஸா நலன்புரி நிதி</option>
+          </select>
         </div>
         <div>
-          <label class="block font-semibold mb-1">விபரம்</label>
-          <input type="text" id="vDesc" required class="w-full p-2.5 border rounded-xl">
+          <label class="block font-semibold mb-1">விபரம் *</label>
+          <input type="text" id="vDesc" required placeholder="மின்சார கட்டணம் / சந்தா நன்கொடை..." class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modalAddVoucher')" class="px-4 py-2 bg-gray-100 rounded-xl">இரத்து</button>
@@ -737,17 +769,17 @@
     </div>
   </div>
 
-  <!-- Add Notice Modal -->
+  <!-- 5. Add Notice Modal -->
   <div id="modalAddNotice" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gold-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">புதிய அறிவிப்பு</h3>
       <form onsubmit="saveNotice(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">தலைப்பு</label>
+          <label class="block font-semibold mb-1">தலைப்பு *</label>
           <input type="text" id="ntTitle" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div>
-          <label class="block font-semibold mb-1">விபரம்</label>
+          <label class="block font-semibold mb-1">விபரம் *</label>
           <textarea id="ntDesc" rows="3" required class="w-full p-2.5 border rounded-xl"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-2">
@@ -758,22 +790,31 @@
     </div>
   </div>
 
-  <!-- Add Zakat Modal -->
+  <!-- 6. Add Zakat Modal -->
   <div id="modalAddZakat" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-purple-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">ஸகாத் பயனாளி சேர்க்கை</h3>
       <form onsubmit="saveZakat(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">பயனாளி பெயர்</label>
+          <label class="block font-semibold mb-1">பயனாளி பெயர் *</label>
           <input type="text" id="zkName" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div>
-          <label class="block font-semibold mb-1">வகைப்பாடு</label>
-          <input type="text" id="zkCategory" required placeholder="விதவை / அனாதை / நோயாளி" class="w-full p-2.5 border rounded-xl">
+          <label class="block font-semibold mb-1">வகைப்பாடு *</label>
+          <select id="zkCategory" class="w-full p-2.5 border rounded-xl">
+            <option value="விதவை (Widow)">விதவை (Widow)</option>
+            <option value="அனாதை (Orphan)">அனாதை (Orphan)</option>
+            <option value="நோயாளி (Illness)">நோயாளி (Illness)</option>
+            <option value="முதியோர் (Senior)">முதியோர் (Senior)</option>
+          </select>
         </div>
         <div>
-          <label class="block font-semibold mb-1">உதவித்தொகை (LKR)</label>
-          <input type="number" id="zkAid" required class="w-full p-2.5 border rounded-xl">
+          <label class="block font-semibold mb-1">உதவித்தொகை (LKR) *</label>
+          <input type="number" id="zkAid" required value="7500" class="w-full p-2.5 border rounded-xl">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">முகவரி & தொடர்பு எண்</label>
+          <input type="text" id="zkContact" placeholder="077-1234567, மெயின் வீதி" class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('modalAddZakat')" class="px-4 py-2 bg-gray-100 rounded-xl">இரத்து</button>
@@ -783,31 +824,31 @@
     </div>
   </div>
 
-  <!-- Add Nikah Modal -->
+  <!-- 7. Add Nikah Modal -->
   <div id="modalAddNikah" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-pink-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">நிக்காஹ் பதிவு</h3>
       <form onsubmit="saveNikah(event)" class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">பதிவு எண்</label>
-            <input type="text" id="nkReg" required placeholder="NK-2025/10" class="w-full p-2.5 border rounded-xl">
+            <label class="block font-semibold mb-1">பதிவு எண் *</label>
+            <input type="text" id="nkReg" required placeholder="NK-2026/01" class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">திகதி</label>
+            <label class="block font-semibold mb-1">திகதி *</label>
             <input type="date" id="nkDate" required class="w-full p-2.5 border rounded-xl">
           </div>
         </div>
         <div>
-          <label class="block font-semibold mb-1">மணமகன்</label>
+          <label class="block font-semibold mb-1">மணமகன் *</label>
           <input type="text" id="nkGroom" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div>
-          <label class="block font-semibold mb-1">மணமகள்</label>
+          <label class="block font-semibold mb-1">மணமகள் *</label>
           <input type="text" id="nkBride" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div>
-          <label class="block font-semibold mb-1">மஹர்</label>
+          <label class="block font-semibold mb-1">மஹர் விபரம்</label>
           <input type="text" id="nkMahr" placeholder="2 பவுண் தங்கம்" class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
@@ -818,27 +859,27 @@
     </div>
   </div>
 
-  <!-- Add Janaza Modal -->
+  <!-- 8. Add Janaza Modal -->
   <div id="modalAddJanaza" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-teal-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">ஜனாஸா பதிவு</h3>
       <form onsubmit="saveJanaza(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">மரணமடைந்தவர் பெயர்</label>
+          <label class="block font-semibold mb-1">மரணமடைந்தவர் பெயர் *</label>
           <input type="text" id="jnName" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">வயது</label>
+            <label class="block font-semibold mb-1">வயது *</label>
             <input type="number" id="jnAge" required class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">மையவாடி இலக்கம் (Plot)</label>
+            <label class="block font-semibold mb-1">மையவாடி இலக்கம் (Plot) *</label>
             <input type="text" id="jnPlot" required placeholder="Plot A-22" class="w-full p-2.5 border rounded-xl">
           </div>
         </div>
         <div>
-          <label class="block font-semibold mb-1">திகதி</label>
+          <label class="block font-semibold mb-1">திகதி *</label>
           <input type="date" id="jnDate" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
@@ -849,27 +890,27 @@
     </div>
   </div>
 
-  <!-- Add Student Modal -->
+  <!-- 9. Add Student Modal -->
   <div id="modalAddStudent" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">மாணவர் சேர்க்கை</h3>
       <form onsubmit="saveStudent(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">மாணவர் பெயர்</label>
+          <label class="block font-semibold mb-1">மாணவர் பெயர் *</label>
           <input type="text" id="stName" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">வகுப்பு / தரம்</label>
+            <label class="block font-semibold mb-1">வகுப்பு / தரம் *</label>
             <input type="text" id="stGrade" required placeholder="தரம் 3 / ஹிஃப்ழு" class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">கட்டணம் (LKR)</label>
-            <input type="number" id="stFee" value="1000" class="w-full p-2.5 border rounded-xl">
+            <label class="block font-semibold mb-1">கட்டணம் (LKR) *</label>
+            <input type="number" id="stFee" value="1000" required class="w-full p-2.5 border rounded-xl">
           </div>
         </div>
         <div>
-          <label class="block font-semibold mb-1">பெற்றோர் பெயர் & போன்</label>
+          <label class="block font-semibold mb-1">பெற்றோர் பெயர் & போன் *</label>
           <input type="text" id="stParent" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="flex justify-end gap-2 pt-2">
@@ -880,22 +921,22 @@
     </div>
   </div>
 
-  <!-- Add Waqf Modal -->
+  <!-- 10. Add Waqf Modal -->
   <div id="modalAddWaqf" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-amber-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">வக்ஃபு சொத்து பதிவு</h3>
       <form onsubmit="saveWaqf(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">சொத்து பெயர் / கடை எண்</label>
+          <label class="block font-semibold mb-1">சொத்து பெயர் / கடை எண் *</label>
           <input type="text" id="wqTitle" required placeholder="கடை இல. 03" class="w-full p-2.5 border rounded-xl">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold mb-1">குத்தகைதாரர்</label>
+            <label class="block font-semibold mb-1">குத்தகைதாரர் *</label>
             <input type="text" id="wqTenant" required class="w-full p-2.5 border rounded-xl">
           </div>
           <div>
-            <label class="block font-semibold mb-1">மாத வாடகை (LKR)</label>
+            <label class="block font-semibold mb-1">மாத வாடகை (LKR) *</label>
             <input type="number" id="wqRent" required class="w-full p-2.5 border rounded-xl">
           </div>
         </div>
@@ -907,17 +948,17 @@
     </div>
   </div>
 
-  <!-- Add Resolution Modal -->
+  <!-- 11. Add Resolution Modal -->
   <div id="modalAddResolution" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
     <div class="glass-card rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-200 text-xs space-y-3">
       <h3 class="text-lg font-bold text-gray-800 mb-2">சபை தீர்மானம் பதிவு</h3>
       <form onsubmit="saveResolution(event)" class="space-y-3">
         <div>
-          <label class="block font-semibold mb-1">தீர்மான தலைப்பு</label>
+          <label class="block font-semibold mb-1">தீர்மான தலைப்பு *</label>
           <input type="text" id="resTitle" required class="w-full p-2.5 border rounded-xl">
         </div>
         <div>
-          <label class="block font-semibold mb-1">விபரம்</label>
+          <label class="block font-semibold mb-1">விபரம் *</label>
           <textarea id="resText" rows="3" required class="w-full p-2.5 border rounded-xl"></textarea>
         </div>
         <div class="flex justify-end gap-2 pt-2">
@@ -971,17 +1012,17 @@
         }
       ],
       vouchers: [
-        { id: 'V-2025/01', date: '2025-05-10', fund: 'பொது நிதி (General Fund)', desc: 'மின்சார கட்டணம்', type: 'EXPENSE', amount: 34500, mode: 'Bank Transfer' },
-        { id: 'V-2025/02', date: '2025-05-12', fund: 'வக்ஃபு வாடகை', desc: 'கடை வாடகை வரவு', type: 'INCOME', amount: 50000, mode: 'Cash' }
+        { id: 'V-2026/01', date: '2026-05-10', fund: 'பொது நிதி (General Fund)', desc: 'மின்சார கட்டணம்', type: 'EXPENSE', amount: 34500, mode: 'Bank Transfer' },
+        { id: 'V-2026/02', date: '2026-05-12', fund: 'வக்ஃபு வாடகை நிதி', desc: 'கடை வாடகை வரவு', type: 'INCOME', amount: 50000, mode: 'Cash' }
       ],
       zakatBeneficiaries: [
         { id: 'ZK-01', name: 'பாத்திமா சுபைதா', category: 'விதவை (Widow)', score: 95, aid: 10000, contact: '075-9988771' }
       ],
       nikahRecords: [
-        { regNo: 'NK-2025/08', date: '2025-04-12', groom: 'முஹம்மத் அஸ்ஹர்', bride: 'பாத்திமா ருஷ்தா', mahr: '2 பவுண் தங்கம்' }
+        { regNo: 'NK-2026/08', date: '2026-04-12', groom: 'முஹம்மத் அஸ்ஹர்', bride: 'பாத்திமா ருஷ்தா', mahr: '2 பவுண் தங்கம்' }
       ],
       janazaRecords: [
-        { id: 'JN-01', name: 'மர்ஹூம் ஏ.எல். அப்துல் காதர்', age: 74, date: '2025-03-22', plot: 'Plot B-14' }
+        { id: 'JN-01', name: 'மர்ஹூம் ஏ.எல். அப்துல் காதர்', age: 74, date: '2026-03-22', plot: 'Plot B-14' }
       ],
       students: [
         { id: 'ST-01', name: 'முஹம்மத் அத்னான்', grade: 'தரம் 4', parent: 'எம். அன்சார் (077-6655441)', fee: 1000, status: 'Paid' }
@@ -990,10 +1031,10 @@
         { id: 'WQ-01', title: 'கடை இல. 01 - மெயின் வீதி', tenant: 'எம். நஸீர்', rent: 30000, status: 'Paid' }
       ],
       resolutions: [
-        { id: 1, title: 'சோலார் மின் உற்பத்தி கட்டமைப்பு', type: 'நம்பிக்கையாளர் கூட்டம்', date: '2025-04-10', text: '15kW சோலார் தகடுகள் பொருத்த ஒப்புதல்.' }
+        { id: 1, title: 'சோலார் மின் உற்பத்தி கட்டமைப்பு', date: '2026-04-10', text: '15kW சோலார் தகடுகள் பொருத்த ஒப்புதல்.' }
       ],
       notices: [
-        { id: 1, title: 'துல்ஹஜ் புனித உழ்ஹிய்யா ஏற்பாடுகள்', desc: 'உழ்ஹிய்யா கொடுக்க விரும்புவோர் பெயர்களைப் பதிவு செய்யவும்.', date: '2025-05-20' }
+        { id: 1, title: 'புனித உழ்ஹிய்யா ஏற்பாடுகள்', desc: 'உழ்ஹிய்யா கொடுக்க விரும்புவோர் பெயர்களைப் பதிவு செய்யவும்.', date: '2026-05-20' }
       ]
     };
 
@@ -1033,10 +1074,40 @@
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       const active = document.getElementById(tabId);
       if (active) active.classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('text-gold-400', 'bg-emerald-900/90', 'border-b-2', 'border-gold-400', 'font-semibold');
+        btn.classList.add('text-gray-300');
+      });
+
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('text-gold-400', 'bg-emerald-900/90', 'border-b-2', 'border-gold-400', 'font-semibold');
+        activeBtn.classList.remove('text-gray-300');
+      }
+
+      ['tab-dashboard', 'tab-census', 'tab-subscription', 'tab-zakat', 'tab-admin'].forEach(t => {
+        const mb = document.getElementById('mbtn-' + t);
+        if (mb) {
+          if (t === tabId) mb.className = 'flex flex-col items-center gap-1 text-gold-400';
+          else mb.className = 'flex flex-col items-center gap-1 hover:text-white';
+        }
+      });
+
+      if (tabId === 'tab-dashboard' && financeChartInstance) {
+        financeChartInstance.resize();
+      }
     }
 
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function openModal(id) { 
+      const m = document.getElementById(id);
+      if (m) m.classList.remove('hidden'); 
+    }
+    
+    function closeModal(id) { 
+      const m = document.getElementById(id);
+      if (m) m.classList.add('hidden'); 
+    }
 
     function renderSettings() {
       const s = appState.settings;
@@ -1095,7 +1166,10 @@
       const list = appState.trustees || [];
       document.getElementById('trusteeCountBadge').innerText = `உறுப்பினர்கள்: ${list.length}`;
       document.getElementById('trusteeGrid').innerHTML = list.map(t => `
-        <div class="bg-white rounded-xl p-4 border border-emerald-100 shadow-sm text-center">
+        <div class="bg-white rounded-xl p-4 border border-emerald-100 shadow-sm text-center relative group">
+          <button onclick="deleteTrustee(${t.id})" class="absolute top-2 right-2 text-red-400 hover:text-red-700 text-xs" title="நீக்குக">
+            <i class="fa-solid fa-trash"></i>
+          </button>
           <div class="w-16 h-16 rounded-2xl bg-emerald-900 text-gold-400 mx-auto mb-2 flex items-center justify-center font-bold text-xl">
             <i class="fa-solid fa-user-tie"></i>
           </div>
@@ -1106,14 +1180,24 @@
       `).join('');
     }
 
-    function openAddTrusteeModal() { openModal('modalAddTrustee'); }
+    function deleteTrustee(id) {
+      if(confirm('இந்த உறுப்பினரை நீக்கவா?')) {
+        appState.trustees = appState.trustees.filter(t => t.id !== id);
+        saveState();
+        renderTrustees();
+        showToast('உறுப்பினர் நீக்கப்பட்டார்!');
+      }
+    }
+
     function saveTrustee(e) {
       e.preventDefault();
       appState.trustees.push({
         id: Date.now(),
         name: document.getElementById('trusteeName').value,
         role: document.getElementById('trusteeRole').value,
-        phone: document.getElementById('trusteePhone').value
+        phone: document.getElementById('trusteePhone').value,
+        nic: document.getElementById('trusteeNIC').value || 'N/A',
+        term: '2024 - 2027'
       });
       saveState();
       renderTrustees();
@@ -1129,7 +1213,7 @@
         </div>
       `).join('');
     }
-    function openAddNoticeModal() { openModal('modalAddNotice'); }
+
     function saveNotice(e) {
       e.preventDefault();
       appState.notices.unshift({
@@ -1154,12 +1238,31 @@
           <td class="p-3">${f.zone}</td>
           <td class="p-3 text-center">${(f.members ? f.members.length : 0) + 1}</td>
           <td class="p-3 text-center"><span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full font-bold text-[10px]">${f.category}</span></td>
-          <td class="p-3 text-center"><a href="https://wa.me/94${f.phone.replace(/[^0-9]/g,'').substring(1)}" target="_blank" class="text-green-600"><i class="fa-brands fa-whatsapp text-base"></i></a></td>
+          <td class="p-3 text-center flex justify-center items-center gap-2">
+            <a href="https://wa.me/94${f.phone.replace(/[^0-9]/g,'').substring(1)}" target="_blank" class="text-green-600 p-1"><i class="fa-brands fa-whatsapp text-base"></i></a>
+            <button onclick="deleteFamily('${f.id}')" class="text-red-400 hover:text-red-700 p-1"><i class="fa-solid fa-trash"></i></button>
+          </td>
         </tr>
       `).join('');
     }
 
-    function openAddFamilyModal() { openModal('modalAddFamily'); }
+    function deleteFamily(id) {
+      if(confirm('இந்த குடும்பப் பதிவை நீக்கவா?')) {
+        appState.families = appState.families.filter(f => f.id !== id);
+        saveState();
+        renderCensusTable();
+        renderSubscriptionMatrix();
+        renderKPIs();
+        showToast('குடும்பம் நீக்கப்பட்டது!');
+      }
+    }
+
+    function filterCensusTable() {
+      const z = document.getElementById('censusZoneFilter').value;
+      if (z === 'ALL') renderCensusTable();
+      else renderCensusTable(appState.families.filter(f => f.zone === z));
+    }
+
     function saveFamily(e) {
       e.preventDefault();
       appState.families.push({
@@ -1169,8 +1272,8 @@
         nic: document.getElementById('famNIC').value,
         phone: document.getElementById('famPhone').value,
         address: document.getElementById('famAddress').value,
-        category: 'Cat-B',
-        monthlySub: 1000,
+        category: document.getElementById('famCategory').value,
+        monthlySub: Number(document.getElementById('famMonthlySub').value) || 1000,
         members: [],
         subscriptions: { 'ஜன': true, 'பெப்': true, 'மார்': false }
       });
@@ -1180,6 +1283,18 @@
       renderKPIs();
       closeModal('modalAddFamily');
       showToast('குடும்பம் சேர்க்கப்பட்டது!');
+    }
+
+    function exportCensusCSV() {
+      let csv = "ID,Name,NIC,Phone,Zone,Category,MonthlySub\n";
+      appState.families.forEach(f => {
+        csv += `"${f.id}","${f.headName}","${f.nic}","${f.phone}","${f.zone}","${f.category}",${f.monthlySub}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Census_Data.csv';
+      a.click();
     }
 
     function renderSubscriptionMatrix() {
@@ -1196,7 +1311,7 @@
             </td>
           `).join('')}
           <td class="p-2 text-center">
-            <button onclick="showToast('ரசீது அனுப்பப்பட்டது!')" class="px-2 py-1 bg-green-600 text-white rounded text-xs"><i class="fa-brands fa-whatsapp"></i></button>
+            <button onclick="sendReceipt('${f.headName}', '${f.phone}')" class="px-2 py-1 bg-green-600 text-white rounded text-xs"><i class="fa-brands fa-whatsapp"></i></button>
           </td>
         </tr>
       `).join('');
@@ -1212,6 +1327,13 @@
       }
     }
 
+    function sendReceipt(name, phone) {
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const wa = cleanPhone.startsWith('0') ? '94' + cleanPhone.substring(1) : cleanPhone;
+      const text = `வணக்கம் ${name}, உங்கள் பள்ளிவாசல் மாதாந்த சந்தா வரவு வைக்கப்பட்டது. ஜஸாகல்லாஹு கைரா!`;
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
     function renderVouchersTable() {
       document.getElementById('voucherTableBody').innerHTML = (appState.vouchers || []).map(v => `
         <tr class="hover:bg-gray-50">
@@ -1221,14 +1343,26 @@
           <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full font-bold text-[10px] ${v.type==='INCOME'?'bg-green-100 text-green-800':'bg-red-100 text-red-800'}">${v.type}</span></td>
           <td class="p-3 text-right font-black">Rs. ${Number(v.amount).toLocaleString()}</td>
           <td class="p-3 text-center text-gray-500">${v.mode}</td>
+          <td class="p-3 text-center">
+            <button onclick="deleteVoucher('${v.id}')" class="text-red-400 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
+          </td>
         </tr>
       `).join('');
     }
-    function openAddVoucherModal() { openModal('modalAddVoucher'); }
+
+    function deleteVoucher(id) {
+      if(confirm('இந்த வவுச்சரை நீக்கவா?')) {
+        appState.vouchers = appState.vouchers.filter(v => v.id !== id);
+        saveState();
+        renderVouchersTable();
+        showToast('வவுச்சர் நீக்கப்பட்டது!');
+      }
+    }
+
     function saveVoucher(e) {
       e.preventDefault();
       appState.vouchers.unshift({
-        id: 'V-2025/' + String((appState.vouchers.length + 1)).padStart(2, '0'),
+        id: 'V-2026/' + String((appState.vouchers.length + 1)).padStart(2, '0'),
         date: new Date().toISOString().split('T')[0],
         type: document.getElementById('vType').value,
         amount: Number(document.getElementById('vAmount').value) || 0,
@@ -1244,15 +1378,40 @@
 
     function renderZakatGrid() {
       document.getElementById('zakatCardsGrid').innerHTML = (appState.zakatBeneficiaries || []).map(z => `
-        <div class="glass-card rounded-2xl p-4 border border-purple-100 shadow-sm space-y-2">
+        <div class="glass-card rounded-2xl p-4 border border-purple-100 shadow-sm space-y-2 relative">
+          <button onclick="deleteZakat('${z.id}')" class="absolute top-2 right-2 text-red-400 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800">${z.category}</span>
           <h4 class="font-bold text-gray-800 text-sm">${z.name}</h4>
           <div class="bg-gray-50 p-2 rounded-xl flex justify-between text-xs">
             <span>உதவித்தொகை:</span>
-            <span class="font-black text-purple-900">Rs. ${z.aid.toLocaleString()}</span>
+            <span class="font-black text-purple-900">Rs. ${Number(z.aid).toLocaleString()}</span>
           </div>
         </div>
       `).join('');
+    }
+
+    function deleteZakat(id) {
+      if(confirm('இந்த பயனாளியை நீக்கவா?')) {
+        appState.zakatBeneficiaries = appState.zakatBeneficiaries.filter(z => z.id !== id);
+        saveState();
+        renderZakatGrid();
+        showToast('பயனாளி நீக்கப்பட்டார்!');
+      }
+    }
+
+    function saveZakat(e) {
+      e.preventDefault();
+      appState.zakatBeneficiaries.push({
+        id: 'ZK-' + Date.now(),
+        name: document.getElementById('zkName').value,
+        category: document.getElementById('zkCategory').value,
+        aid: Number(document.getElementById('zkAid').value) || 5000,
+        contact: document.getElementById('zkContact').value || 'N/A'
+      });
+      saveState();
+      renderZakatGrid();
+      closeModal('modalAddZakat');
+      showToast('பயனாளி சேர்க்கப்பட்டார்!');
     }
 
     function renderNikahAndJanaza() {
@@ -1271,6 +1430,36 @@
       `).join('');
     }
 
+    function saveNikah(e) {
+      e.preventDefault();
+      appState.nikahRecords.unshift({
+        regNo: document.getElementById('nkReg').value,
+        date: document.getElementById('nkDate').value,
+        groom: document.getElementById('nkGroom').value,
+        bride: document.getElementById('nkBride').value,
+        mahr: document.getElementById('nkMahr').value
+      });
+      saveState();
+      renderNikahAndJanaza();
+      closeModal('modalAddNikah');
+      showToast('நிக்காஹ் பதிவு செய்யப்பட்டது!');
+    }
+
+    function saveJanaza(e) {
+      e.preventDefault();
+      appState.janazaRecords.unshift({
+        id: 'JN-' + Date.now(),
+        name: document.getElementById('jnName').value,
+        age: Number(document.getElementById('jnAge').value) || 0,
+        plot: document.getElementById('jnPlot').value,
+        date: document.getElementById('jnDate').value
+      });
+      saveState();
+      renderNikahAndJanaza();
+      closeModal('modalAddJanaza');
+      showToast('ஜனாஸா பதிவு செய்யப்பட்டது!');
+    }
+
     function renderMadrasa() {
       document.getElementById('madrasaTableBody').innerHTML = (appState.students || []).map(s => `
         <tr class="hover:bg-gray-50">
@@ -1278,22 +1467,88 @@
           <td class="p-3">${s.grade}</td>
           <td class="p-3">${s.parent}</td>
           <td class="p-3 text-center font-bold">Rs. ${s.fee}</td>
-          <td class="p-3 text-center"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full font-bold text-[10px]">${s.status}</span></td>
+          <td class="p-3 text-center">
+            <button onclick="toggleStudentFee('${s.id}')" class="px-2 py-0.5 rounded-full font-bold text-[10px] ${s.status==='Paid'?'bg-green-100 text-green-800':'bg-red-100 text-red-800'}">
+              ${s.status}
+            </button>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="deleteStudent('${s.id}')" class="text-red-400 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
+          </td>
         </tr>
       `).join('');
     }
 
+    function toggleStudentFee(id) {
+      const st = appState.students.find(s => s.id === id);
+      if(st) {
+        st.status = st.status === 'Paid' ? 'Due' : 'Paid';
+        saveState();
+        renderMadrasa();
+      }
+    }
+
+    function deleteStudent(id) {
+      if(confirm('இந்த மாணவரை நீக்கவா?')) {
+        appState.students = appState.students.filter(s => s.id !== id);
+        saveState();
+        renderMadrasa();
+        showToast('மாணவர் நீக்கப்பட்டார்!');
+      }
+    }
+
+    function saveStudent(e) {
+      e.preventDefault();
+      appState.students.push({
+        id: 'ST-' + Date.now(),
+        name: document.getElementById('stName').value,
+        grade: document.getElementById('stGrade').value,
+        parent: document.getElementById('stParent').value,
+        fee: Number(document.getElementById('stFee').value) || 1000,
+        status: 'Paid'
+      });
+      saveState();
+      renderMadrasa();
+      closeModal('modalAddStudent');
+      showToast('மாணவர் சேர்க்கப்பட்டார்!');
+    }
+
     function renderWaqfGrid() {
       document.getElementById('waqfCardsGrid').innerHTML = (appState.waqfProperties || []).map(w => `
-        <div class="glass-card rounded-2xl p-4 border border-amber-100 space-y-2">
+        <div class="glass-card rounded-2xl p-4 border border-amber-100 space-y-2 relative">
+          <button onclick="deleteWaqf('${w.id}')" class="absolute top-2 right-2 text-red-400 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
           <h4 class="font-bold text-gray-800 text-sm">${w.title}</h4>
           <div class="text-xs text-gray-600">குத்தகைதாரர்: ${w.tenant}</div>
           <div class="bg-amber-50 p-2 rounded-xl flex justify-between text-xs font-black text-amber-900">
             <span>மாத வாடகை:</span>
-            <span>Rs. ${w.rent.toLocaleString()}</span>
+            <span>Rs. ${Number(w.rent).toLocaleString()}</span>
           </div>
         </div>
       `).join('');
+    }
+
+    function deleteWaqf(id) {
+      if(confirm('இந்த சொத்து பதிவை நீக்கவா?')) {
+        appState.waqfProperties = appState.waqfProperties.filter(w => w.id !== id);
+        saveState();
+        renderWaqfGrid();
+        showToast('சொத்து நீக்கப்பட்டது!');
+      }
+    }
+
+    function saveWaqf(e) {
+      e.preventDefault();
+      appState.waqfProperties.push({
+        id: 'WQ-' + Date.now(),
+        title: document.getElementById('wqTitle').value,
+        tenant: document.getElementById('wqTenant').value,
+        rent: Number(document.getElementById('wqRent').value) || 0,
+        status: 'Paid'
+      });
+      saveState();
+      renderWaqfGrid();
+      closeModal('modalAddWaqf');
+      showToast('சொத்து பதிவு செய்யப்பட்டது!');
     }
 
     function renderResolutions() {
@@ -1305,6 +1560,20 @@
       `).join('');
     }
 
+    function saveResolution(e) {
+      e.preventDefault();
+      appState.resolutions.unshift({
+        id: Date.now(),
+        title: document.getElementById('resTitle').value,
+        text: document.getElementById('resText').value,
+        date: new Date().toISOString().split('T')[0]
+      });
+      saveState();
+      renderResolutions();
+      closeModal('modalAddResolution');
+      showToast('தீர்மானம் சேர்க்கப்பட்டது!');
+    }
+
     function exportFullDatabaseJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       const a = document.createElement('a');
@@ -1313,7 +1582,7 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
-      showToast('பேக்கப் கோப்பு பதிவிறக்கப்பட்டது!');
+      showToast('பேக்கப் பதிவிறக்கப்பட்டது!');
     }
 
     function importFullDatabaseJSON(e) {
@@ -1325,7 +1594,7 @@
           appState = JSON.parse(evt.target.result);
           saveState();
           initApp();
-          showToast('டேட்டாபேஸ் வெற்றிகரமாக மீளமைக்கப்பட்டது!');
+          showToast('டேட்டாபேஸ் மீளமைக்கப்பட்டது!');
         } catch(err) {
           showToast('பிழையான கோப்பு!');
         }
@@ -1342,12 +1611,11 @@
       );
       renderCensusTable(filtered);
     }
+
     function clearGlobalSearch() {
       document.getElementById('globalSearchInput').value = '';
       renderCensusTable();
     }
-
-    function printCurrentView() { window.print(); }
 
     function initChart() {
       const ctx = document.getElementById('financeChart').getContext('2d');
